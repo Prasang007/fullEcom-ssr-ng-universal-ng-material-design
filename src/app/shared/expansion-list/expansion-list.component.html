@@ -1,0 +1,13 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{received.name}}
+    </mat-panel-title>
+    <mat-panel-description>
+      {{received.role}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div *ngFor="let order of orders" >
+    <app-order [order]="order" ></app-order>
+  </div>
+</mat-expansion-panel>

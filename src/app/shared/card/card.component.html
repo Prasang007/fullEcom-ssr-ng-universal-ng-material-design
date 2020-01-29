@@ -1,0 +1,14 @@
+<mat-card  style="cursor:pointer">
+  <mat-card-title>{{received.name}}</mat-card-title>
+<img mat-card-image src="{{received.image}}" alt="photo of {{received.name}}">
+  <mat-card-content>
+    <p>
+      <b>
+        {{received.description}}
+    </b>
+  </p>
+  <div *ngFor="let order of orders" >
+    <app-order [order]="order" ></app-order>
+  </div>
+  </mat-card-content>
+</mat-card>

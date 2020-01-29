@@ -1,0 +1,10 @@
+form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 80%;
+  height: 600px;
+  border: 15px ridge indigo;
+  border-radius: 10px;
+}
+

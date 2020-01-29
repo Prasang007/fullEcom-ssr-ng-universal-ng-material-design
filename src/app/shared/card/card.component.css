@@ -1,0 +1,8 @@
+mat-card{
+  margin-right: 20px;
+  height: 400px;
+  width: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+

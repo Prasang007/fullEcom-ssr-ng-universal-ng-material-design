@@ -1,0 +1,13 @@
+<mat-toolbar color="primary" >
+<h1 style="flex: auto;" >{{page}}</h1>
+      <a mat-button routerLink="/products" *ngIf="!isAdmin"  >Products</a>
+      <a mat-button routerLink="/users" *ngIf="isAdmin"  >Users</a>
+      <a mat-button routerLink="/orders" *ngIf="!isAdmin" >Orders</a>
+      <a mat-button routerLink="/manage/orders" *ngIf="isAdmin" >Manage Orders</a>
+      <button mat-button [matMenuTriggerFor]="account">Account</button>
+      <mat-menu #account="matMenu">
+        <button mat-menu-item>Manage Account</button>
+        <button mat-menu-item>Sign Out</button>
+      </mat-menu>
+    <button mat-button (click)="toggleAdmin()">admin: {{isAdmin}}</button>
+</mat-toolbar>
