@@ -16,7 +16,7 @@ export class ProductDetailsComponent implements OnInit {
   }
   fetchProduct() {
     this.product = history.state.data;
-    console.log(this.product);
+    // console.log(this.product);
   }
 
   goBack() {

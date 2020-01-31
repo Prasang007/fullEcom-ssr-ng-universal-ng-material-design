@@ -1,6 +1,6 @@
 import Product from '../models/products';
 import { Request, Response, NextFunction } from 'express';
-
+import user from '../models/users';
 
 export class ProductRoute {
 

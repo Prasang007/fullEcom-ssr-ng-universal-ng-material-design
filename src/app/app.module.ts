@@ -15,6 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UsersInfoComponent } from './components/admin/users-info/users-info.component';
 import { ManageOrdersComponent } from './components/admin/manage-orders/manage-orders.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     LoginComponent,
     UsersInfoComponent,
     ManageOrdersComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

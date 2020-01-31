@@ -1,3 +1,4 @@
+import { SharedRoutes } from './src/app/routes/shared-routes';
 import { ProductRoute } from './src/app/routes/product-routes';
 /**
  * *** NOTE ON IMPORTING FROM ANGULAR AND NGUNIVERSAL IN THIS FILE ***
@@ -16,6 +17,7 @@ import { ProductRoute } from './src/app/routes/product-routes';
  * import for `ngExpressEngine`.
  */
 
+import 'dotenv/config';
 import 'zone.js/dist/zone-node';
 import * as mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
@@ -23,17 +25,22 @@ import * as express from 'express';
 import {join} from 'path';
 
 const productRoute: ProductRoute = new ProductRoute();
+const sharedRoute: SharedRoutes = new SharedRoutes();
 // Express server
 const app = express();
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist/browser');
-
+const {
+  MONGO_USER,
+  MONGO_PASSWORD,
+  MONGO_PATH,
+} = process.env;
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const {AppServerModuleNgFactory, LAZY_MODULE_MAP, ngExpressEngine, provideModuleMap} = require('./dist/server/main');
 
 
-mongoose.connect('mongodb+srv://prasang:ongraph123@cluster0-hhc7p.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_PATH}`, {
   useNewUrlParser: true,
   useFindAndModify: false,
   useUnifiedTopology: true
@@ -62,6 +69,7 @@ app.get('*.*', express.static(DIST_FOLDER, {
   maxAge: '1y'
 }));
 productRoute.productRoute(app);
+sharedRoute.sharedRoute(app);
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
   res.render('index', { req });
