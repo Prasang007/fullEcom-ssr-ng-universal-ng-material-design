@@ -1,6 +1,9 @@
-app-display-cards, .flex {
-  display: flex;
-}
+
 .active{
   background-color: rgba(120, 72, 155, 0.308);
+}
+.product-container{
+  display:flex;
+  flex-flow: wrap;
+  padding-left: 94px;
 }

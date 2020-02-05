@@ -17,6 +17,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatTableModule} from '@angular/material/table';
+import {MatChipsModule} from '@angular/material/chips';
 @NgModule({
   declarations: [CardComponent, ExpansionListComponent, OrderComponent],
   imports: [
@@ -34,7 +41,14 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule,
+    MatAutocompleteModule,
+    MatBadgeModule,
+    MatStepperModule,
+    MatProgressBarModule,
+    MatTableModule,
+    MatChipsModule
   ],
   exports: [
     CardComponent,
@@ -51,8 +65,15 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule,
+    MatAutocompleteModule,
+    MatBadgeModule,
+    MatStepperModule,
+    MatProgressBarModule,
+    MatTableModule,
+    MatChipsModule
   ],
-  providers: []
+  providers: [ ]
 })
 export class SharedModule { }

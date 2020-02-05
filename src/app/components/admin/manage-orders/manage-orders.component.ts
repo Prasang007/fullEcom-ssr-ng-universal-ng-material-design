@@ -1,5 +1,7 @@
+import { Router } from '@angular/router';
 import { SharedService } from './../../../shared/shared.service';
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-manage-orders',
@@ -7,11 +9,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./manage-orders.component.css']
 })
 export class ManageOrdersComponent implements OnInit {
-
-  constructor(private shared: SharedService) { }
+  dataSource;
+  columns = ['Name', 'Unit Price', 'Quantity' , 'Shipping Address', 'UserId' , 'Status', 'Total'];
+  constructor(private shared: SharedService, private router: Router) { }
 
   ngOnInit() {
     this.shared.setTitle(' Manage Orders');
+    this.getOrders();
   }
-
+  getOrders() {
+  console.log(this.shared.currentUser._id);
+  console.log(this.shared.currentUser);
+  this.shared.getOrders().subscribe( orders => {
+    console.log(orders);
+    this.dataSource = new MatTableDataSource(orders);
+    });
+  }
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  eachRow(row) {
+    this.router.navigateByUrl('/order-status', {state: {data: row}});
+  }
 }

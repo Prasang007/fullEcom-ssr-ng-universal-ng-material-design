@@ -2,6 +2,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +18,26 @@ import { UsersInfoComponent } from './components/admin/users-info/users-info.com
 import { ManageOrdersComponent } from './components/admin/manage-orders/manage-orders.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SignupComponent } from './components/signup/signup.component';
+import { AddProductComponent } from './components/admin/add-product/add-product.component';
+import { OrderStatusComponent } from './components/admin/order-status/order-status.component';
+import { CartComponent } from './components/cart/cart.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { UserDetailsComponent } from './components/admin/user-details/user-details.component';
+
+const config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('1045310318871-rd17hr0emcv8plqcmvracnc8o2se74rv.apps.googleusercontent.com')
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('188131179218619')
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -28,6 +50,11 @@ import { SignupComponent } from './components/signup/signup.component';
     UsersInfoComponent,
     ManageOrdersComponent,
     SignupComponent,
+    AddProductComponent,
+    OrderStatusComponent,
+    CartComponent,
+    OrderDetailsComponent,
+    UserDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -35,13 +62,19 @@ import { SignupComponent } from './components/signup/signup.component';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    SocialLoginModule,
     ReactiveFormsModule,
     SharedModule
   ],
   exports: [
 
   ],
-  providers: [SharedService],
+  providers: [SharedService,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

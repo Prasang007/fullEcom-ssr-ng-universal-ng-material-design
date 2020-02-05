@@ -1,0 +1,5 @@
+.user-container{
+  display:flex;
+  flex-flow: wrap;
+  padding-left: 94px;
+}

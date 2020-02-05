@@ -1,14 +1,15 @@
-<mat-card  style="cursor:pointer">
+<mat-card (click)="gotClicked()" >
   <mat-card-title>{{received.name}}</mat-card-title>
-<img mat-card-image src="{{received.image}}" alt="photo of {{received.name}}">
+<img mat-card-image src="{{received.image}}" class="{{received['category']}}" alt="photo of {{received.name}}">
   <mat-card-content>
-    <p>
+    <p >
       <b>
-        {{received.description}}
+         <span *ngIf="description">&#8377;</span> {{received.description}}
     </b>
   </p>
-  <div *ngFor="let order of orders" >
-    <app-order [order]="order" ></app-order>
-  </div>
+  <!-- <span *ngIf="!orders.length && !description " >No orders Yet !!</span>
+  <div *ngIf="orders.length" >
+  <h4>Total Orders:</h4> <p>{{orders.length}}</p>
+  </div> -->
   </mat-card-content>
 </mat-card>

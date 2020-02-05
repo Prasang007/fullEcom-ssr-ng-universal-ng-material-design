@@ -1,8 +1,28 @@
 mat-card{
-  margin-right: 20px;
-  height: 400px;
+  margin-right: 100px;
+  height: 333px;
   width: 200px;
   overflow-y: scroll;
   overflow-x: hidden;
+  cursor:pointer;
+  background-color: #ccc3c440;
+  margin-bottom: 20px;
+  padding-left:0;
+  padding-right: 0;
 }
+mat-card-title {
+  text-align: center;
+}
+mat-card-content {
+  padding-left: 10px;
+}
+img {
+  width: 100%;
+  height: 232.39px;
+}
+.Clothes, .shoes {
+  height: 261.39px;
+}
+
+
 

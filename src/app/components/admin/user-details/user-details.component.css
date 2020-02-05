@@ -1,0 +1,26 @@
+.user-container {
+  display: block;
+  margin: auto;
+  width: 82%;
+}
+.user-container div {
+  width: 100%
+}
+img{
+  height: 200px;
+}
+.user-details {
+  display: flex;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+tr[mat-row] {
+  cursor: pointer;
+}

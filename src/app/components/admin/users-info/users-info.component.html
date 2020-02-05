@@ -5,14 +5,12 @@
 <mat-form-field>
   <input matInput placeholder="Search for users" [(ngModel)]="filter" >
 </mat-form-field>
-<div [ngStyle]="{display: view.value ==='grid' ? 'flex':'block' }" >
+<div class="user-container" [ngStyle]="{display: view.value ==='grid' ? 'flex':'block' }" >
   <div *ngFor="let user of users | filter: filter:'name'" style="flex: auto" >
 
     <app-expansion-list *ngIf="view.value === 'list'"
       [received]="user" [orders]="user['orders']" ></app-expansion-list>
-
-      <app-card *ngIf="view.value === 'grid'" [received]="user" [orders]="user['orders']"
-       ></app-card>
+      <app-card *ngIf="view.value === 'grid'" [received]="user" (clicked)="userInfo(user)"></app-card>
       <!-- the one passed in the card and the data when card is clicked is different -->
    </div>
 </div>

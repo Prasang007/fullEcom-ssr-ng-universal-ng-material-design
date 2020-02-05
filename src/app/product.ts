@@ -3,8 +3,6 @@ export class Product {
     name: string;
     image: string;
     category: string;
-    data: {
-      price: number,
-      description: string
-    };
+    price: number;
+    description: string;
 }

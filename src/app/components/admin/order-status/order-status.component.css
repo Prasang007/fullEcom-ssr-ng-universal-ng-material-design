@@ -1,0 +1,15 @@
+.order-container {
+  display: block;
+  margin: auto;
+  width: 82%;
+}
+.order-container div {
+  width: 100%
+}
+img{
+  height: 200px;
+}
+.order-details {
+  display: flex;
+}
+

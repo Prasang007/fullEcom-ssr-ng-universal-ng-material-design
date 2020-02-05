@@ -20,6 +20,9 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
     this.showPassord = false;
     this.shared.setTitle('Sign Up');
+    this.initializeForm();
+  }
+  initializeForm() {
     this.signUpForm =  new FormGroup({
       name: new FormControl('', Validators.required),
       email: new FormControl('', [ Validators.required, validateEmail]),

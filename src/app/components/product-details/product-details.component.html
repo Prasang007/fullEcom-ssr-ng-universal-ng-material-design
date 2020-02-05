@@ -3,6 +3,7 @@
     arrow_back
   </mat-icon>
   </button>
+  <div class="productContainer">
   <mat-card color="primary" >
     <mat-card-title style="margin-bottom: 20px;" >{{product.name}}</mat-card-title>
     <div style="display: flex;" >
@@ -11,21 +12,27 @@
 
     </div>
     <mat-card-content >
-      {{product.data.description}}
+      {{product?.description}}
     </mat-card-content>
   </div>
-  <div style="display: flex;" >
+    <div style="display: flex;" >
     <div>
-        <b for="schedule">Schedule the order :</b>
-        <input [matDatepicker]="picker" placeholder="MM/DD//YYYY">
+
+        <input [matDatepicker]="picker" placeholder="MM/DD//YYYY" #date [value]="">
         <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker touchUi #picker></mat-datepicker>
     </div>
         <div style="flex: auto" >
+          <span *ngIf="addedToCart" style="color:rgb(4, 46, 4)" >Added to Cart</span>
         <mat-card-actions align="end" >
-            <button mat-button> Add To Cart</button>
-            <button mat-button> Buy Now</button>
+            <button mat-button (click)="quantity.value = +quantity.value + 1" ><mat-icon>add</mat-icon></button>
+            <input matInput type="number" [value]=1 min=0 #quantity style="width: 38px; border: 1px solid black;">
+            <button *ngIf="quantity.value > 1"  mat-button (click)="quantity.value = quantity.value - 1 " ><mat-icon>remove</mat-icon></button>
+            <button mat-button (click)="addToCart(quantity.value, date.value)"  > Add to Cart <mat-icon>add_shopping_cart</mat-icon></button>
+            <button mat-button (click)="buyNow(quantity.value, date.value)" > Buy Now</button>
           </mat-card-actions>
         </div>
-    </div>
+      </div>
+
   </mat-card>
+</div>

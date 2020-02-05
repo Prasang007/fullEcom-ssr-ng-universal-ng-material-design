@@ -2,7 +2,7 @@
   <mat-card-title>Login</mat-card-title>
 <mat-card-content>
 
-<form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)" >
+<form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)" style="width: 100%">
     <p class="error" *ngIf="invalid" >Invalid User</p>
 <p>
   <mat-form-field>
@@ -36,4 +36,8 @@
 
 </form>
 </mat-card-content>
+<button style="width: 100%; background-color: #dd4b39; margin:6px; margin-left:0; color:white;"
+(click)="signInWithGoogle()" mat-button>Sign In with Google</button>
+<button style="width: 100%; background-color: #3b5898; margin:6px; margin-left:0; color:white;"
+(click)="signInWithFB()" mat-button>Sign In with Facebook</button>
 </mat-card>

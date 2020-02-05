@@ -1,19 +1,9 @@
-import Product from '../models/products';
-import { Request, Response, NextFunction } from 'express';
-import user from '../models/users';
+import { Router } from 'express';
+import productController from '../controllers/product-controller';
 
-export class ProductRoute {
+const router = Router();
 
-    public productRoute(app): void {
+router.get(('/'), productController.getAllProducts );
+router.get(('/getProduct'), productController.getProduct);
+export default router;
 
-      app.route('/api/').get((req: Request, res: Response, next: NextFunction) => {
-        Product.find((error, data) => {
-          if (error) {
-              return next(error);
-          } else {
-              res.json(data);
-          }
-      });
-    });
-  }
-}

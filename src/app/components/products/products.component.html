@@ -2,17 +2,27 @@
 <mat-form-field>
   <input matInput placeholder="Search for products" [(ngModel)]="filter" >
 </mat-form-field>
-<div style="display:flex;">
-    <div *ngFor="let product of products | filter: category: 'category' | filter: filter:'name'"
-    style="flex: auto" >
-        <app-card [received]="product" [description]="product['data']['price']"
-        (click)="getProductDetails(product)" ></app-card>
-        <!-- the one passed in the card and the data when card is clicked is different -->
-    </div>
-      <div>
-        <button mat-button [ngClass]="{'active' :category==='clothes'}" (click)="category = 'clothes'" >Clothes</button>
-        <button mat-button [ngClass]="{'active' :category==='shoes'}" (click)="category = 'shoes'" >Shoes</button>
-      </div>
+<mat-tab-group (selectedTabChange)="tabChange($event)" >
+    <mat-tab label="Clothes">
+        <div class="product-container">
+            <div *ngFor="let product of products | filter: category: 'category' | filter: filter:'name'"
+            style="flex: auto;" >
 
+                <app-card [received]="product" [description]="product['price']"
+                (clicked)="getProductDetails(product)" ></app-card>
+                <!-- the one passed in the card and the data when card is clicked is different -->
+            </div>
+        </div>
+      </mat-tab>
+    <mat-tab label="Shoes">
+      <div class="product-container">
+            <div *ngFor="let product of products | filter: category: 'category' | filter: filter:'name'"
+            style="flex: auto;" >
 
-</div>
+                <app-card [received]="product" [description]="product['price']"
+                (clicked)="getProductDetails(product)" ></app-card>
+            </div>
+        </div>
+     </mat-tab>
+</mat-tab-group>
+

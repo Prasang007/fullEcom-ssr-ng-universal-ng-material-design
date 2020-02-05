@@ -1,8 +1,17 @@
 export class Order {
         _id: string;
-        orderId: string;
-        name: string;
-        image: string;
+        orderId: number;
+        productName: string;
+        productId: string;
+        productImage: string;
         category: string;
-        price: string;
+        userId: string;
+        userName: string;
+        address: string;
+        status: string;
+        price: number;
+        quantity: number;
+        total: number;
+        placed?: Date;
+        scheduled: Date;
 }

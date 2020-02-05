@@ -5,6 +5,15 @@ export class User {
     name: string;
     password: string;
     image: string;
-    role: string;
-    orders?: Order[];
+    admin: boolean;
+    totalOrders: number;
+    cart?: Order[];
+    constructor() {
+      this.name = '';
+      this.password = '';
+      this.image = '';
+      this.admin = false;
+      this.totalOrders = 0;
+      this.cart = [];
+    }
 }

@@ -1,5 +1,4 @@
-import { SharedRoutes } from './src/app/routes/shared-routes';
-import { ProductRoute } from './src/app/routes/product-routes';
+import routes from './src/app/routes/routes';
 /**
  * *** NOTE ON IMPORTING FROM ANGULAR AND NGUNIVERSAL IN THIS FILE ***
  *
@@ -24,8 +23,7 @@ import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import {join} from 'path';
 
-const productRoute: ProductRoute = new ProductRoute();
-const sharedRoute: SharedRoutes = new SharedRoutes();
+
 // Express server
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -68,8 +66,9 @@ app.set('views', DIST_FOLDER);
 app.get('*.*', express.static(DIST_FOLDER, {
   maxAge: '1y'
 }));
-productRoute.productRoute(app);
-sharedRoute.sharedRoute(app);
+app.use('/', routes);
+// productRoute.productRoute(app);
+// sharedRoute.sharedRoute(app);
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
   res.render('index', { req });

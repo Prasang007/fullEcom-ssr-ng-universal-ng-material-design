@@ -6,9 +6,11 @@ const UsersSchema: mongoose.Schema = new mongoose.Schema(
     id: {type: ObjectId},
     name: {type: String},
     password: {type: String},
-    image: {type: String, default: '../assets/user.png'},
+    image: {type: String, default: '../assets/user4.jpg'},
     email: {type: String},
-    admin: {type: Boolean, default: false}
+    admin: {type: Boolean, default: false},
+    totalOrders: {type: Number, default: 0},
+    cart : {type: Array, default: []}
   }
 );
 
