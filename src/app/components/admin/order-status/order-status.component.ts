@@ -16,11 +16,9 @@ export class OrderStatusComponent implements OnInit {
     this.order = history.state.data;
     this.progressAssign();
   }
-  deleteOrder(id: string) {
-    this.shared.deleteOrder(id).subscribe(success => {
-      this.shared.updateTotalOrder(this.order._id, 1, 'del').subscribe(success1 => {
-        this.shared.openSnackbar(success1, 'Close');
-      });
+  cancelOrder() {
+    this.order.status = 'Cancelled';
+    this.shared.changeStatus(this.order).subscribe( success => {
     });
     this.location.back();
   }

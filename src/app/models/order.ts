@@ -13,6 +13,7 @@ const OrderSchema: mongoose.Schema = new mongoose.Schema(
     status: {type: String},
     userName: {type: String},
     email: {type: String},
+    placedBy: {type: String},
     address: {type: String},
     quantity: {type : Number},
     price: {type : Number},

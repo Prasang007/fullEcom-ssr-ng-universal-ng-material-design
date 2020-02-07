@@ -17,7 +17,7 @@ export class OrderComponent implements OnInit {
 
   ngOnInit() {
     this.getOrders();
-
+    this.shared.setTitle('Orders');
   }
   getOrders() {
   this.shared.getMyOrders(this.shared.currentUser._id).subscribe( orders => {

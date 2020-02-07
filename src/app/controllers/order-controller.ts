@@ -1,5 +1,6 @@
 import order from '../models/order';
 import { Request, Response, NextFunction } from 'express';
+import SharedController from './shared-controller';
 
 
 
@@ -25,6 +26,8 @@ class OrderController {
       if (err) {
         return console.error(err);
       }
+      SharedController.notification(data);
+      // SharedController.mail(data);
       res.json('Order Placed Succesfully !!');
     });
   }
@@ -39,6 +42,15 @@ class OrderController {
 }
 static getMyOrder = (req: Request, res: Response, next: NextFunction) => {
   order.find({userId: req.query.userId}, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  });
+}
+static getOrder = (req: Request, res: Response, next: NextFunction) => {
+  order.findById(req.query._id, (error, data) => {
     if (error) {
       return next(error);
     } else {

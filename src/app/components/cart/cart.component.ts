@@ -64,6 +64,7 @@ export class CartComponent implements OnInit {
         order.userId = this.shared.currentUser._id;
         order.orderId = this.shared.currentUser.totalOrders + 1;
         order.email = this.shared.currentUser.email;
+        order.placedBy = this.shared.currentUser.name;
         this.shared.placeOrder(order).subscribe(success => {
           this.shared.openSnackbar(success, 'Close');
         });

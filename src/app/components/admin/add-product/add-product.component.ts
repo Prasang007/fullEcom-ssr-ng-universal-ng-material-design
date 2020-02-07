@@ -19,6 +19,7 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit() {
     this.productAdded = false;
+    this.shared.setTitle('Add Product');
     this.initForm();
   }
   initForm() {

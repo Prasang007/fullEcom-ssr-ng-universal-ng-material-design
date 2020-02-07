@@ -7,6 +7,7 @@ export class Order {
         category: string;
         userId: string;
         email: string;
+        placedBy: string;
         userName: string;
         address: string;
         status: string;

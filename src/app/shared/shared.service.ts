@@ -20,6 +20,9 @@ export class SharedService {
   isAdmin = false;
   loggedIn = false;
   isLoading = new BehaviorSubject(false);
+  isSocial = false;
+  notifications: {_id, order: Order, status}[] = [];
+  unreadNotifs = 0;
   page: string;
   currentUser = new User();
   apiUrl = 'http://localhost:4000/api/';
@@ -80,6 +83,11 @@ export class SharedService {
     .set('userId', id);
     return this.http.get<Order[]>(this.apiUrl + 'orders/getMyOrders', {params});
   }
+  getOrder(id: string): Observable<Order> {
+    const params = new HttpParams()
+    .set('_id', id);
+    return this.http.get<Order>(this.apiUrl + 'orders/getOrder', {params});
+  }
   changeStatus(order) {
     return this.http.put<string>(this.apiUrl + 'orders/changeStatus', order, httpOptions);
   }
@@ -110,5 +118,12 @@ export class SharedService {
   }
   updateCart(value) {
     return this.http.put<string>(this.apiUrl + 'users/updateCart', value, httpOptions);
+  }
+  // ------------------------------------ADMIN---------------------------------------------------------
+  getNotification() {
+    return this.http.get<{_id, order: Order, status}[]>(this.apiUrl + 'shared/getNotf');
+  }
+  saveNotification() {
+    return this.http.put<{_id, order: Order, status}[]>(this.apiUrl + 'shared/setNotif', {status: 'read'}, httpOptions);
   }
 }

@@ -77,7 +77,7 @@ static changePassword =  (req: Request, res: Response, next: NextFunction) => {
       if (req.body.task === 'add') {
        data.totalOrders = +data.totalOrders + +req.body.totalOrders;
       } else {
-        data.totalOrders = +data.totalOrders - +req.body.totalOrders;
+        data.totalOrders = data.totalOrders - req.body.totalOrders;
       }
       data.save((er, dta) => {
         if (er) {

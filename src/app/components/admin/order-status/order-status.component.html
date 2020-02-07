@@ -5,7 +5,7 @@
     </mat-icon>
 </button>
 
-<button mat-button (click)="deleteOrder(order._id)"  style="background-color: rgb(51, 14, 78); color:white;  position: absolute;right:36px;">
+<button mat-button (click)="cancelOrder()"  style="background-color: rgb(51, 14, 78); color:white;  position: absolute;right:36px;">
   <mat-icon>delete</mat-icon>
 </button>
 <div class="order-container">
@@ -29,19 +29,19 @@
   <mat-horizontal-stepper #stepper [selectedIndex]="step">
       <mat-step >
           <ng-template matStepLabel>Ordered</ng-template>
-          <button mat-button matStepperNext (click)="increaseProgress()" > Progress
+          <button mat-button matStepperNext (click)="increaseProgress()" > Confirmed
           <mat-icon>arrow_forward_ios</mat-icon>
         </button>
       </mat-step>
       <mat-step >
         <ng-template matStepLabel>Confirmed</ng-template>
-        <button mat-button matStepperNext (click)="increaseProgress()" > Progress
+        <button mat-button matStepperNext (click)="increaseProgress()" > Shipped
         <mat-icon>arrow_forward_ios</mat-icon>
       </button>
     </mat-step>
       <mat-step >
           <ng-template matStepLabel>Shipped</ng-template>
-          <button mat-button matStepperNext (click)="increaseProgress()" > Progress
+          <button mat-button matStepperNext (click)="increaseProgress()" > Delivered
           <mat-icon>arrow_forward_ios</mat-icon>
         </button>
       </mat-step>

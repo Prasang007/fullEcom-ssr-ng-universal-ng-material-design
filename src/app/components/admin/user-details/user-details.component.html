@@ -13,6 +13,9 @@
     <div style="width: 70%" >
       <h3>Total Orders: {{orders?.length}}</h3>
       <hr>
+    <p> <b>Name: </b>{{user.name}}</p>
+    <p> <b>Email: </b>{{user.email}}</p>
+    <p><b>Cart value:</b> {{user.cart.length}} </p>
       <button mat-button style="background-color: rgba(137, 62, 190, 0.685); color: white;" (click)= "showOrders = !showOrders">Show Orders</button>
     </div>
   </div>

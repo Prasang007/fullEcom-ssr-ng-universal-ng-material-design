@@ -18,6 +18,14 @@ export class UsersInfoComponent implements OnInit {
   ngOnInit() {
     this.shared.setTitle('All Users');
     this.fetchUsers();
+    this.shared.getNotification().subscribe(notifs => {
+      notifs.forEach(notif => {
+        if (notif.status === 'Unread') {
+          this.shared.unreadNotifs = this.shared.unreadNotifs + 1;
+        }
+      });
+      this.shared.notifications = notifs.reverse();
+    });
   }
   fetchUsers() {
     this.shared.getUsers().subscribe( users => {

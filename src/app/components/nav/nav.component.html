@@ -7,7 +7,7 @@
     <h1 style="flex: auto;" >{{shared.page}}</h1>
          <a mat-button routerLinkActive="active" routerLink="/add-product" *ngIf="shared.isAdmin"><mat-icon >add_box</mat-icon></a>
           <a mat-button routerLinkActive="active" routerLink="/products" *ngIf="!shared.isAdmin"  >Products</a>
-          <a mat-button routerLinkActive="active" routerLink="/users" *ngIf="shared.isAdmin" >Users</a>
+          <a mat-button routerLinkActive="active" routerLink="/users"  >Users</a>
           <a mat-button routerLinkActive="active" routerLink="/orders" *ngIf="!shared.isAdmin" >Orders</a>
           <a mat-button routerLinkActive="active" routerLink="/manage/orders" *ngIf="shared.isAdmin" >Manage Orders</a>
           <button mat-button [matMenuTriggerFor]="account">Account</button>
@@ -17,12 +17,13 @@
             </button>
             <button mat-menu-item (click)="signout()" >Sign Out</button>
           </mat-menu>
-          <button *ngIf="shared.isAdmin" mat-button [matMenuTriggerFor]="notif">
-            <mat-icon [matBadge]="i" matBadgeColor="warn" >notifications</mat-icon>
+          <button *ngIf="shared.isAdmin" mat-button (click)="seen()" [matMenuTriggerFor]="notif">
+            <mat-icon [matBadge]="shared?.unreadNotifs" [matBadgeHidden]="!shared?.unreadNotifs" matBadgeColor="warn" >notifications</mat-icon>
           </button>
-          <mat-menu #notif="matMenu">
-            <div *ngFor="let order of orders; let i = index" >
-            <button mat-menu-item>{{order.userName}} has ordered {{order.productName}} </button>
+          <mat-menu #notif="matMenu" style="background-color: #807d7d8a;" >
+            <div *ngFor="let notification of shared.notifications; let i = index"  >
+            <p mat-menu-item style=" padding: 10px;text-align: justify;" routerLink="order-status" state="{data:{{notification.order}}}"
+            class="{{notification.status}}" >{{notification.order.placedBy}} has ordered {{notification.order.quantity}} {{notification.order.productName}} with a total of {{notification.order.total}}.  </p>
             </div>
           </mat-menu>
 

@@ -39,26 +39,30 @@ export class LoginComponent implements OnInit {
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(da => {
     this.authService.authState.subscribe(data => {
+      if (data) {
       this.user = data;
       this.shared.emailCheck(this.user.email).subscribe(data1 => {
           if (data1) {
             this.shared.getUserBy('email', this.user.email).subscribe(user => {
               this.shared.currentUser = user[0];
               this.shared.loggedIn = true;
+              this.shared.isSocial = true;
               this.router.navigateByUrl('/products');
             });
           } else {
             const newUser: User = {name: this.user.name, email: this.user.email, image: this.user.photoUrl, password: ''};
             this.shared.signUpWithEmail(newUser).subscribe(user => {
               this.shared.loggedIn = true;
+              this.shared.isSocial = true;
               this.shared.currentUser = user;
               this.router.navigateByUrl('/products');
             });
           }
         });
+      }
     });
   });
-  }
+}
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
     this.authService.authState.subscribe(data => {

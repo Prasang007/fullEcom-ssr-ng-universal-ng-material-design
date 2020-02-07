@@ -10,10 +10,12 @@
     "e2e": "ng e2e",
     "compile:server": "webpack --config webpack.server.config.js --progress --colors",
     "serve:ssr": "node dist/server",
-    "build:ssr": "npm run compile:server && npm run build:server-bundles && npm run build:client-bundles ",
+    "build:ssr": "npm run compile:server && npm run build:server-bundles && npm run build:client-bundlesfast ",
     "go": "npm run build:ssr",
+    "goServer": "ng build --prod && npm run build:server-bundlesfast ",
     "build:server-bundles": "ng run assignmentModuleOne:server:production --bundleDependencies all",
-    "build:client-bundles": "nodemon --watch src/ -e ts,html,css --exec 'ng build --prod && npm run serve:ssr'"
+    "build:server-bundlesfast": "nodemon --watch src/ -e ts,html,css --exec 'npm run compile:server && ng run assignmentModuleOne:server:production --bundleDependencies all && npm run serve:ssr'",
+    "build:client-bundlesfast": "nodemon --watch src/ -e ts,html,css --exec 'ng build --prod && npm run serve:ssr'"
   },
   "private": true,
   "dependencies": {
