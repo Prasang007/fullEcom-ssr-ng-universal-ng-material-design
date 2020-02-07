@@ -1,1 +1,26 @@
-<p>order-details works!</p>
+<h1>Details of Order By {{order.userName}}</h1>
+<button mat-button color="primary" (click)="goBack()"  >
+    <mat-icon>
+      arrow_back
+    </mat-icon>
+</button>
+<div class="order-container">
+  <div class="order-details">
+    <div style="width: 30%">
+    <img src="{{order.productImage}}">
+    </div>
+    <div style="width: 70%" >
+      <h3>{{order.productName}}</h3>
+      <hr>
+    <h5 *ngIf="order.scheduled"  >Scheduled on : {{order.scheduled}}</h5>
+      <p>Quantity: {{order.quantity}}</p>
+      <p>Price: {{order.price}}</p>
+      <p>Total: {{order.total}}</p>
+      <p>Status:  <mat-chip *ngIf="order.status ==='Delivered'"  color="primary" selected>{{order.status}}</mat-chip>
+        <mat-chip *ngIf="order.status ==='Accepted'"  color="accent" selected>{{order.status}}</mat-chip>
+        <mat-chip *ngIf="order.status ==='Pending'"  color="warn" selected>{{order.status}}</mat-chip>
+        <mat-chip *ngIf="order.status ==='Shipped'"  color="primary" selected>{{order.status}}</mat-chip></p>
+      <h5>Ordered by {{order.userName}}</h5>
+    </div>
+  </div>
+</div>

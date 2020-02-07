@@ -12,7 +12,9 @@
           <a mat-button routerLinkActive="active" routerLink="/manage/orders" *ngIf="shared.isAdmin" >Manage Orders</a>
           <button mat-button [matMenuTriggerFor]="account">Account</button>
           <mat-menu #account="matMenu">
-            <button mat-menu-item>Manage Account</button>
+            <button mat-menu-item *ngIf="!shared.isAdmin" routerLinkActive="active" routerLink="/manage-account" >
+              Manage Account
+            </button>
             <button mat-menu-item (click)="signout()" >Sign Out</button>
           </mat-menu>
           <button *ngIf="shared.isAdmin" mat-button [matMenuTriggerFor]="notif">
@@ -25,7 +27,7 @@
           </mat-menu>
 
           <a mat-button routerLinkActive="active" routerLink="/cart" *ngIf="!shared.isAdmin" >
-            <mat-icon>shopping_cart</mat-icon>
+            <mat-icon [matBadge]="shared.currentUser.cart.length" matBadgeColor="warn" >shopping_cart</mat-icon>
           </a>
         <!-- <button mat-button (click)="toggleAdmin()">admin: {{shared.isAdmin}}</button> -->
 </mat-toolbar>

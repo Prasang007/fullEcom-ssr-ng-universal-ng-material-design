@@ -17,11 +17,10 @@ export class CardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.received);
     this.received.description = this.description;
   }
   gotClicked() {
     this.clicked.emit();
   }
 }
-// &#8377;
+

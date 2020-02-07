@@ -10,11 +10,6 @@
       <td mat-cell *matCellDef="let order"> {{order.total}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="Date">
-      <th mat-header-cell *matHeaderCellDef> Date </th>
-      <td mat-cell *matCellDef="let order"> {{order.date}} </td>
-    </ng-container>
-
     <ng-container matColumnDef="Shipping Address">
       <th mat-header-cell *matHeaderCellDef> Shipping Address</th>
       <td mat-cell *matCellDef="let order"> {{order.address}} </td>
@@ -34,7 +29,7 @@
             <mat-chip *ngIf="order.status ==='Delivered'"  color="primary" selected>{{order.status}}</mat-chip>
             <mat-chip *ngIf="order.status ==='Accepted'"  color="accent" selected>{{order.status}}</mat-chip>
             <mat-chip *ngIf="order.status ==='Pending'"  color="warn" selected>{{order.status}}</mat-chip>
-            <mat-chip *ngIf="order.status ==='Shipped'"  color="warn" selected>{{order.status}}</mat-chip>
+            <mat-chip *ngIf="order.status ==='Shipped'"  color="primary" selected>{{order.status}}</mat-chip>
         </td>
       </ng-container>
     <tr mat-header-row *matHeaderRowDef="columns"></tr>

@@ -9,7 +9,7 @@ class SharedController {
           return next(error);
       } else {
         if (data.length) {
-          if (data[0]['password'] === md5(req.body.password)) {
+          if (data[0].password === md5(req.body.password)) {
             res.json(data);
           } else {
             res.json(0);
@@ -22,7 +22,6 @@ class SharedController {
     });
   }
   static checkEmail = (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.query.email);
     user.find({email: req.query.email}, (error, data) => {
       if (error) {
         return next(error);
@@ -35,14 +34,22 @@ class SharedController {
       }
     });
   }
-  static signup = (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body);
+  static signupWithEmail = (req: Request, res: Response, next: NextFunction) => {
     req.body.password = md5(req.body.password);
     const newUser = new user(req.body);
     newUser.save((err, data) => {
-      if (err) {return console.error(err);}
-      console.log(data.name);
+      if (err) {return console.error(err); }
+      res.json(data);
+    });
+  }
+  static signup = (req: Request, res: Response, next: NextFunction) => {
+    req.body.password = md5(req.body.password);
+    const newUser = new user(req.body);
+    newUser.save((err, data) => {
+      if (err) {return console.error(err); }
+
       res.json('Sign Up Succesfull');
+
     });
   }
 }

@@ -5,9 +5,10 @@ const ProductSchema: mongoose.Schema = new mongoose.Schema(
   {
     id: {type: ObjectId},
     name: {type: String},
-    image: {type: String},
+    image: {type: String, default: '../assets/gShirt.jpg'},
     category: {type: String},
-    data: {type: Object}
+    price: {type: Number},
+    description: {type: String},
   }
 );
 

@@ -7,9 +7,9 @@
          <span *ngIf="description">&#8377;</span> {{received.description}}
     </b>
   </p>
-  <!-- <span *ngIf="!orders.length && !description " >No orders Yet !!</span>
-  <div *ngIf="orders.length" >
-  <h4>Total Orders:</h4> <p>{{orders.length}}</p>
-  </div> -->
+  <span *ngIf="!received['totalOrders'] && !description " >No orders Yet !!</span>
+  <div *ngIf="received['totalOrders']" >
+  <h4>Total Orders:</h4> <p>{{received['totalOrders']}}</p>
+  </div>
   </mat-card-content>
 </mat-card>

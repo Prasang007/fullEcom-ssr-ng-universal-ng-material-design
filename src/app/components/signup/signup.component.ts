@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { validateEmail, validateCapital, validateNumber, validateSpecial } from 'src/app/validators/formValidators';
 import { SharedService } from 'src/app/shared/shared.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +14,7 @@ export class SignupComponent implements OnInit {
   showPassord;
   constructor(private shared: SharedService,
               private router: Router,
-              private snackbar: MatSnackBar) { }
+              ) { }
 
   ngOnInit() {
     this.showPassord = false;
@@ -37,15 +36,12 @@ export class SignupComponent implements OnInit {
     this.signUpForm.markAllAsTouched();
     if (this.signUpForm.valid) {
       this.shared.emailCheck(value.email).subscribe(data => {
-        console.log('email: ');
-        console.log(data);
         if (data) {
-          this.snackbar.open('Email ID Already Taken', 'Close');
+          this.shared.openSnackbar('Email ID Already Taken', 'Close');
         } else {
           this.shared.signUp(value).subscribe(success => {
-            console.log(success);
+            this.shared.openSnackbar(success, 'Close');
             this.router.navigateByUrl('/login');
-            // console.log(data);
           });
         }
       });

@@ -18,8 +18,11 @@ export class OrderStatusComponent implements OnInit {
   }
   deleteOrder(id: string) {
     this.shared.deleteOrder(id).subscribe(success => {
-      console.log(success);
+      this.shared.updateTotalOrder(this.order._id, 1, 'del').subscribe(success1 => {
+        this.shared.openSnackbar(success1, 'Close');
+      });
     });
+    this.location.back();
   }
   progressAssign() {
     switch (this.order.status) {
@@ -46,24 +49,20 @@ export class OrderStatusComponent implements OnInit {
       case 25:
         this.order.status = 'Accepted';
         this.shared.changeStatus(this.order).subscribe( success => {
-          console.log(success);
         });
         break;
       case 50:
         this.order.status = 'Shipped';
         this.shared.changeStatus(this.order).subscribe( success => {
-          console.log(success);
         });
         break;
       case 75:
           this.order.status = 'Delivered';
           this.shared.changeStatus(this.order).subscribe( success => {
-            console.log(success);
           });
           break;
     }
     this.progress = this.progress + 25 ;
-    console.log(this.order.status);
   }
   goBack() {
     this.location.back();

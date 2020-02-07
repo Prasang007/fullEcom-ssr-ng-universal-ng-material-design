@@ -1,0 +1,58 @@
+<mat-card>
+  <mat-card-content>
+    <div>
+    <form [formGroup]="updateForm" (ngSubmit)="updateAccount(updateForm.value)"  >
+      <p>
+        <mat-form-field >
+         <input matInput placeholder="Email Address" formControlName="email" [value]="currentUser.email" >
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field >
+         <input matInput placeholder="Name" formControlName="name" [value]="currentUser.name" >
+        </mat-form-field>
+      </p>
+      <p class="error" *ngIf=" updateForm.controls['name'].errors?.required && updateForm.controls['name'].touched">This is required</p>
+
+      <div class="button">
+        <button type="submit" mat-button [disabled]="" >Update</button>
+      </div>
+    </form>
+    <button style="margin-top: 20px;" mat-button (click)="changePassword = !changePassword" >Change Password</button>
+  </div>
+    <div *ngIf="changePassword" >
+          <mat-form-field >
+            <input matInput type="password" placeholder="Old Password" #oldpass>
+          </mat-form-field>
+          <button mat-button (click)="checkPsd(oldpass.value)" >Set new Password</button>
+    </div>
+    <div *ngIf="allowChangePsd" >
+
+        <form [formGroup]="newPsdForm">
+          <mat-form-field >
+            <input matInput type="password" placeholder="Password" formControlName="newPassword" #pass>
+          </mat-form-field>
+
+          <a><mat-icon *ngIf="!showPassord" (click)="showPassord = !showPassord; pass.type = showPassord ? 'text':'password'">visibility</mat-icon></a>
+          <a><mat-icon *ngIf="showPassord" (click)="showPassord = !showPassord; pass.type = showPassord ? 'text':'password' ">visibility_off</mat-icon></a>
+
+      <p class="error"  *ngIf=" !newPsdForm.controls['newPassword'].valid
+        && newPsdForm.controls['newPassword'].errors?.number ">
+        Enter atleast one number</p>
+      <p class="error"  *ngIf=" !newPsdForm.controls['newPassword'].valid
+        && newPsdForm.controls['newPassword'].errors?.capital ">
+        Enter atleast one capital letter</p>
+      <p class="error"*ngIf=" !newPsdForm.controls['newPassword'].valid
+        && newPsdForm.controls['newPassword'].errors?.special ">
+        Password should have special characters</p>
+      <p class="error"*ngIf=" !newPsdForm.controls['newPassword'].valid
+        && newPsdForm.controls['newPassword'].errors?.minlength ">
+        Password should have atleast 8 characters</p>
+      <p class="error"  *ngIf=" newPsdForm.controls['newPassword'].errors?.required
+        && newPsdForm.controls['newPassword'].touched">
+        This is required</p>
+        <button mat-button (click)="setNewPsd(pass.value)" >Change Password</button>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

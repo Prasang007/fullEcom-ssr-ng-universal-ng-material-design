@@ -9,7 +9,6 @@ import { Order } from 'src/app/orders';
 })
 export class ExpansionListComponent implements OnInit {
   @Input() received: User ;
-  @Input() orders?: Order[] = [];
   constructor() { }
 
   ngOnInit() {

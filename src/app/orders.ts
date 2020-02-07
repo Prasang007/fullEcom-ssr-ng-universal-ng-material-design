@@ -6,6 +6,7 @@ export class Order {
         productImage: string;
         category: string;
         userId: string;
+        email: string;
         userName: string;
         address: string;
         status: string;

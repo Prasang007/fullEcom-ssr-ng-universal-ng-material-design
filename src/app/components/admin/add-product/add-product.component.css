@@ -1,0 +1,16 @@
+form {
+  width: 50%;
+  margin: auto;
+  border: 4px solid #5a64a2;
+  padding: 10px;
+}
+form mat-form-field {
+  width: 100%;
+}
+.error {
+  color: crimson;
+}
+button {
+  background-color: #5a64a2;
+  color: white;
+}

@@ -30,6 +30,7 @@ export class ProductDetailsComponent implements OnInit {
   }
   addToCart(quantity, scheduleDate: Date) {
     this.addedToCart = true;
+    this.shared.openSnackbar('Added To Cart', 'Close');
     const newItem = new Order() ;
     // tslint:disable-next-line: radix
     newItem.quantity = parseInt(quantity);
@@ -39,7 +40,6 @@ export class ProductDetailsComponent implements OnInit {
     newItem.productImage = this.product.image;
     newItem.category = this.product.category;
     newItem.price = quantity * this.product.price;
-    console.log(newItem);
     this.shared.currentUser.cart.unshift(newItem);
   }
   buyNow(quantity, scheduleDate: Date) {

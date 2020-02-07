@@ -3,7 +3,6 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from 'src/app/shared/shared.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cart',
@@ -15,7 +14,7 @@ export class CartComponent implements OnInit {
   displayedColumns: string[] = ['Prodcut', 'Quantity' , 'Cost', 'Remove'];
   cart = new MatTableDataSource();
   orderDetails: FormGroup;
-  constructor(private shared: SharedService, private router: Router, private snackbar: MatSnackBar) {
+  constructor(private shared: SharedService, private router: Router) {
     this.orderDetails = new FormGroup({
       name: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
@@ -34,7 +33,6 @@ export class CartComponent implements OnInit {
   }
 
   removeFromCart(i) {
-    console.log(i);
     if (!i) {
       this.shared.currentUser.cart.shift();
     } else {
@@ -56,7 +54,6 @@ export class CartComponent implements OnInit {
 
   placeOrder(value) {
     if (this.shared.currentUser.cart[0]['price']) {
-      console.log(value);
       this.getCart().forEach(order => {
         if (order.price) {
         order.total = order.price;
@@ -65,17 +62,22 @@ export class CartComponent implements OnInit {
         order.userName = value.name;
         order.status = 'Pending';
         order.userId = this.shared.currentUser._id;
+        order.orderId = this.shared.currentUser.totalOrders + 1;
+        order.email = this.shared.currentUser.email;
         this.shared.placeOrder(order).subscribe(success => {
-          console.log(success);
+          this.shared.openSnackbar(success, 'Close');
         });
         }
+      });
+      this.shared.updateTotalOrder(this.shared.currentUser._id, this.shared.currentUser.cart.length, 'add').subscribe(success1 => {
+        this.shared.openSnackbar(success1, 'Close');
       });
       this.shared.currentUser.cart = [];
       this.cart = new MatTableDataSource(this.shared.currentUser.cart);
       this.getTotalCost();
       this.router.navigateByUrl('/orders');
     } else {
-       this.snackbar.open('Your Cart is Empty', 'Close', {duration: 2000});
+       this.shared.openSnackbar('Your Cart is Empty', 'Close');
        this.router.navigateByUrl('/products');
      }
   }

@@ -12,6 +12,7 @@ const OrderSchema: mongoose.Schema = new mongoose.Schema(
     userId: {type: String},
     status: {type: String},
     userName: {type: String},
+    email: {type: String},
     address: {type: String},
     quantity: {type : Number},
     price: {type : Number},

@@ -1,1 +1,37 @@
-<p>add-product works!</p>
+<h1 style="text-align: center;color:#5665bb;" >Add Product</h1>
+<mat-card>
+  <form [formGroup]="productForm" (ngSubmit)="addProduct(productForm.value)">
+    <mat-form-field>
+      <input type="text" matInput formControlName="name" placeholder="Name of Product" >
+    </mat-form-field>
+    <p class="error"
+    *ngIf=" productForm.controls['name'].errors?.required && productForm.controls['name'].touched">
+      This is required</p>
+    <mat-form-field>
+      <input type="number" matInput formControlName="price" placeholder="Price of Product" >
+    </mat-form-field>
+    <p class="error"
+    *ngIf=" productForm.controls['price'].errors?.required && productForm.controls['price'].touched">
+      This is required</p>
+      <mat-form-field>
+        <mat-select formControlName="category" >
+          <mat-option value="" disabled selected hidden>Choose a Category</mat-option>
+          <mat-option *ngFor = "let category of categories" [value] = "category">
+            {{category}}
+          </mat-option>
+        </mat-select>
+     </mat-form-field>
+     <p class="error"
+      *ngIf=" productForm.controls['category'].errors?.required && productForm.controls['category'].touched">
+        This is required</p>
+      <mat-form-field>
+        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+        formControlName="description" placeholder="Description of the Product" #textarea >
+        </textarea>
+      </mat-form-field>
+      <p class="error"
+      *ngIf=" productForm.controls['price'].errors?.required && productForm.controls['price'].touched">
+        This is required</p>
+      <button mat-button>Add Product<mat-icon>arrow_forward_ios</mat-icon></button>
+  </form>
+</mat-card>

@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Order } from 'src/app/orders';
 import { MatTableDataSource } from '@angular/material/table';
 import { currentId } from 'async_hooks';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -10,21 +11,16 @@ import { currentId } from 'async_hooks';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
-  // orders: Order[];
   dataSource;
-  columns = ['Date', 'Unit Price', 'Quantity' , 'Shipping Address', 'Status', 'Total'];
-  constructor(private shared: SharedService) { }
+  columns = ['Unit Price', 'Quantity' , 'Shipping Address', 'Status', 'Total'];
+  constructor(private shared: SharedService, private router: Router) { }
 
   ngOnInit() {
-    // this.dataSource = [];
     this.getOrders();
 
   }
   getOrders() {
-  console.log(this.shared.currentUser._id);
-  console.log(this.shared.currentUser);
   this.shared.getMyOrders(this.shared.currentUser._id).subscribe( orders => {
-    console.log(orders);
     this.dataSource = new MatTableDataSource(orders);
     });
   }
@@ -32,6 +28,6 @@ export class OrderComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   eachRow(row) {
-    console.log(row);
+    this.router.navigateByUrl('/orders/' + row._id, {state: {data: row}});
   }
 }

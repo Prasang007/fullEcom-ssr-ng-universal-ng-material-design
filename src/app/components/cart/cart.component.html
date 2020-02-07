@@ -28,8 +28,12 @@
     <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 </table>
 <form [formGroup]="orderDetails">
-  <input matInput type="text" placeholder="Name" formControlName="name" >
-  <input matInput type="text" placeholder="Address" formControlName="address" >
+  <mat-form-field>
+    <input matInput type="text" placeholder="Name" formControlName="name" >
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Address" formControlName="address" >
+  </mat-form-field>
   <button mat-button (click)="placeOrder(orderDetails.value)" [disabled]="!orderDetails.valid" >Buy Now </button>
 </form>
 

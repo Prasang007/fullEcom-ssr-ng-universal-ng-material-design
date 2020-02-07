@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -23,6 +23,8 @@ import { OrderStatusComponent } from './components/admin/order-status/order-stat
 import { CartComponent } from './components/cart/cart.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { UserDetailsComponent } from './components/admin/user-details/user-details.component';
+import { LoaderInterceptor } from './shared/loader.intercepter';
+import { ManageAccountComponent } from './components/manage-account/manage-account.component';
 
 const config = new AuthServiceConfig([
   {
@@ -55,6 +57,7 @@ export function provideConfig() {
     CartComponent,
     OrderDetailsComponent,
     UserDetailsComponent,
+    ManageAccountComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -70,6 +73,7 @@ export function provideConfig() {
 
   ],
   providers: [SharedService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig

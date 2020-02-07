@@ -17,6 +17,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSelectModule} from '@angular/material'
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatBadgeModule} from '@angular/material/badge';
@@ -24,6 +25,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [CardComponent, ExpansionListComponent, OrderComponent],
   imports: [
@@ -48,7 +50,9 @@ import {MatChipsModule} from '@angular/material/chips';
     MatStepperModule,
     MatProgressBarModule,
     MatTableModule,
-    MatChipsModule
+    MatSelectModule,
+    MatChipsModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     CardComponent,
@@ -58,6 +62,7 @@ import {MatChipsModule} from '@angular/material/chips';
     MatToolbarModule,
     MatMenuModule,
     MatButtonModule,
+    MatSelectModule,
     MatButtonToggleModule,
     MatListModule,
     MatExpansionModule,
@@ -72,7 +77,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatStepperModule,
     MatProgressBarModule,
     MatTableModule,
-    MatChipsModule
+    MatChipsModule,
+    MatProgressSpinnerModule
   ],
   providers: [ ]
 })

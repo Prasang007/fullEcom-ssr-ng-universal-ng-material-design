@@ -1,3 +1,4 @@
+import { ManageAccountComponent } from './components/manage-account/manage-account.component';
 import { UserDetailsComponent } from './components/admin/user-details/user-details.component';
 import { AddProductComponent } from './components/admin/add-product/add-product.component';
 import { OrderStatusComponent } from './components/admin/order-status/order-status.component';
@@ -13,6 +14,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AdminGuard } from './shared/admin.guard';
 import { CartComponent } from './components/cart/cart.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 
 const routes: Routes = [
@@ -20,6 +22,8 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'products', component: ProductsComponent, canActivate: [LoginInGuard] },
   {path: 'orders', component: OrderComponent, canActivate: [LoginInGuard]},
+  {path: 'orders/:id', component: OrderDetailsComponent, canActivate: [LoginInGuard]},
+  {path: 'manage-account', component: ManageAccountComponent, canActivate: [LoginInGuard]},
   {path: 'cart', component: CartComponent, canActivate: [LoginInGuard]},
   {path: 'products/:id', component: ProductDetailsComponent, canActivate: [LoginInGuard]},
   {path: 'users', component: UsersInfoComponent, canActivate: [ AdminGuard]},

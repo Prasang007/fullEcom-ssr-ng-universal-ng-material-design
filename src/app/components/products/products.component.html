@@ -25,4 +25,8 @@
         </div>
      </mat-tab>
 </mat-tab-group>
+<div style="width: 100%" [hidden]="!loading">
+    <mat-progress-spinner style="width:50%; margin:auto;" [mode]="'indeterminate'">
+    </mat-progress-spinner>
+</div>
 

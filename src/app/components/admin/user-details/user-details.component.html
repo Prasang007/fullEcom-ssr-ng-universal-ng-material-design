@@ -1,4 +1,4 @@
-<h1 style="margin-left:20px;">Details of {{user.name}}</h1>
+<h1 style="margin-left:20px;">Details of {{user?.name}}</h1>
 <button mat-button color="primary" (click)="goBack()"  >
     <mat-icon>
       arrow_back
@@ -8,7 +8,7 @@
   <mat-card>
   <div class="user-details">
     <div style="width: 30%">
-    <img src="{{user.image}}">
+    <img src="{{user?.image}}">
     </div>
     <div style="width: 70%" >
       <h3>Total Orders: {{orders?.length}}</h3>
@@ -53,7 +53,7 @@
             <mat-chip *ngIf="order.status ==='Delivered'"  color="primary" selected>{{order.status}}</mat-chip>
             <mat-chip *ngIf="order.status ==='Accepted'"  color="accent" selected>{{order.status}}</mat-chip>
             <mat-chip *ngIf="order.status ==='Pending'"  color="warn" selected>{{order.status}}</mat-chip>
-            <mat-chip *ngIf="order.status ==='Shipped'"  color="warn" selected>{{order.status}}</mat-chip>
+            <mat-chip *ngIf="order.status ==='Shipped'"  color="primary" selected>{{order.status}}</mat-chip>
         </td>
       </ng-container>
     <tr mat-header-row *matHeaderRowDef="columns"></tr>

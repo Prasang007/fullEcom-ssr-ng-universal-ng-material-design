@@ -1,3 +1,4 @@
+import { User } from './../../users';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/shared/shared.service';
 import { Component, OnInit } from '@angular/core';
@@ -5,7 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { validateEmail} from 'src/app/validators/formValidators';
 import { AuthService } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
-import { SocialUser } from "angularx-social-login";
+import { SocialUser } from 'angularx-social-login';
 
 
 @Component({
@@ -36,32 +37,46 @@ export class LoginComponent implements OnInit {
   }
 
   signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-    this.authService.authState.subscribe((data) => {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(da => {
+    this.authService.authState.subscribe(data => {
       this.user = data;
+      this.shared.emailCheck(this.user.email).subscribe(data1 => {
+          if (data1) {
+            this.shared.getUserBy('email', this.user.email).subscribe(user => {
+              this.shared.currentUser = user[0];
+              this.shared.loggedIn = true;
+              this.router.navigateByUrl('/products');
+            });
+          } else {
+            const newUser: User = {name: this.user.name, email: this.user.email, image: this.user.photoUrl, password: ''};
+            this.shared.signUpWithEmail(newUser).subscribe(user => {
+              this.shared.loggedIn = true;
+              this.shared.currentUser = user;
+              this.router.navigateByUrl('/products');
+            });
+          }
+        });
     });
-    console.log(this.user);
-    this.shared.emailCheck(this.user.email).subscribe(data => {
-        if (data) {
-          this.shared.loggedIn = true;
-          this.router.navigateByUrl('/products');
-        } else {
-          this.shared.signUp({name: this.user.name, email: this.user.email, image: this.user.photoUrl, password: ''}).subscribe(success => {
-            console.log(success);
-            this.shared.loggedIn = true;
-            this.router.navigateByUrl('/products');
-            console.log(data);
-          });
-        }
-      });
-
+  });
   }
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-    this.authService.authState.subscribe((data) => {
-      this.user = data;
+    this.authService.authState.subscribe(data => {
+    this.user = data;
+    this.shared.emailCheck(this.user.email).subscribe(data1 => {
+      if (data1) {
+        this.shared.loggedIn = true;
+        this.router.navigateByUrl('/products');
+      } else {
+        const newUser: User = {name: this.user.name, email: this.user.email, image: this.user.photoUrl, password: ''};
+        this.shared.signUpWithEmail(newUser).subscribe(user => {
+          this.shared.loggedIn = true;
+          this.shared.currentUser = user;
+          this.router.navigateByUrl('/products');
+        });
+      }
     });
-    console.log(this.user);
+  });
   }
 
 
@@ -87,7 +102,7 @@ export class LoginComponent implements OnInit {
         }
       } else {
         this.invalid = true;
-        console.log('Invalid User');
+        this.shared.openSnackbar('Invalid User', 'Close');
       }
     });
   }
