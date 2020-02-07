@@ -1,6 +1,6 @@
-##E-Commerce Application
+## E-Commerce Application
 
-##Setup Application
+## Setup Application
 
 Use npm i to install dependencies
 
