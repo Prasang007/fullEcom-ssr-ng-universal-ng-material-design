@@ -21,11 +21,21 @@ import 'zone.js/dist/zone-node';
 import * as mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
+import * as https from 'https';
 import {join} from 'path';
+import * as fs from 'fs';
+
+const privateKey = fs.readFileSync('key.pem');
+const certificate = fs.readFileSync('certificate.pem');
+
+const credentials = {key: privateKey, cert: certificate};
+
+
+const app = express();
+// createServer(credentials);
 
 
 // Express server
-const app = express();
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist/browser');
 const {
@@ -60,21 +70,16 @@ app.engine('html', ngExpressEngine({
 app.set('view engine', 'html');
 app.set('views', DIST_FOLDER);
 
-// Example Express Rest API endpoints
-// app.get('/api/**', (req, res) => { });
-// Serve static files from /browser
+
 app.get('*.*', express.static(DIST_FOLDER, {
   maxAge: '1y'
 }));
 app.use('/', routes);
-// productRoute.productRoute(app);
-// sharedRoute.sharedRoute(app);
-// All regular routes use the Universal engine
 app.get('*', (req, res) => {
   res.render('index', { req });
 });
 
 // Start up the Node server
-app.listen(PORT, () => {
-  console.log(`Node Express server listening on http://localhost:${PORT}`);
+https.createServer(credentials, app).listen(PORT, () => {
+  console.log(`Node Express server listening on https://localhost:${PORT}`);
 });

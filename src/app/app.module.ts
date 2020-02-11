@@ -30,7 +30,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 const config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('1045310318871-rd17hr0emcv8plqcmvracnc8o2se74rv.apps.googleusercontent.com')
+    provider: new GoogleLoginProvider('1045310318871-vif3cu83ignh6iun1o63ol48kh8me77r.apps.googleusercontent.com')
   },
   {
     id: FacebookLoginProvider.PROVIDER_ID,

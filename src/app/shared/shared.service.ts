@@ -25,7 +25,7 @@ export class SharedService {
   unreadNotifs = 0;
   page: string;
   currentUser = new User();
-  apiUrl = 'http://localhost:4000/api/';
+  apiUrl = 'https://localhost:4000/api/';
   constructor( private http: HttpClient,
                private title: Title, private snackbar: MatSnackBar  ) { }
   // ---------------------------------------PRODUCTS----------------------------------------------
