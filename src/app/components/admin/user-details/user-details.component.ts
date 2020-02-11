@@ -15,11 +15,15 @@ export class UserDetailsComponent implements OnInit {
   dataSource;
   orders: Order[];
   showOrders = false;
-  columns = ['Name', 'Unit Price', 'Quantity' , 'Shipping Address', 'UserId' , 'Status', 'Total'];
+  loading = false;
+  columns = ['Name', 'ProductName', 'Unit Price', 'Quantity' , 'Shipping Address', 'UserId' , 'Status', 'Total'];
   constructor(private location: Location, private router: Router, private shared: SharedService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.shared.setTitle(' User Details');
+    this.shared.isLoading.subscribe((v) => {
+    this.loading = v;
+    });
     if (history.state.data) {
     this.user = history.state.data;
     this.getOrders();
@@ -34,7 +38,7 @@ export class UserDetailsComponent implements OnInit {
   getOrders() {
     this.shared.getMyOrders(this.user._id).subscribe( orders => {
       this.orders = orders;
-      this.dataSource = new MatTableDataSource(this.orders);
+      this.dataSource = new MatTableDataSource(this.orders.reverse());
     });
   }
   eachRow(row) {

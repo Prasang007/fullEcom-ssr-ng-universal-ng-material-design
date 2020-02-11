@@ -17,7 +17,7 @@ export class CardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.received.description = this.description;
+    this.received.descrip = this.description;
   }
   gotClicked() {
     this.clicked.emit();

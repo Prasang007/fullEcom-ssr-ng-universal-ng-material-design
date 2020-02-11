@@ -29,8 +29,11 @@ export class SharedService {
   constructor( private http: HttpClient,
                private title: Title, private snackbar: MatSnackBar  ) { }
   // ---------------------------------------PRODUCTS----------------------------------------------
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl + 'products');
+  getProducts(category: string, length): Observable<Product[]> {
+    const params = new HttpParams()
+    .set('category', category)
+    .set('skip', length);
+    return this.http.get<Product[]>(this.apiUrl + 'products', {params});
   }
   getProductById(id: string): Observable<Product> {
     const params = new HttpParams()
@@ -91,9 +94,9 @@ export class SharedService {
   changeStatus(order) {
     return this.http.put<string>(this.apiUrl + 'orders/changeStatus', order, httpOptions);
   }
-  deleteOrder(id: string) {
-    return this.http.delete(this.apiUrl + 'orders/' + id);
-  }
+  // deleteOrder(id: string) {
+  //   return this.http.delete(this.apiUrl + 'orders/' + id);
+  // }
 
   // ---------------------------------------USERS----------------------------------------------
   getUsers(): Observable<User[]> {

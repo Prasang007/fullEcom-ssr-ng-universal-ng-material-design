@@ -9,25 +9,45 @@ import { SharedService } from 'src/app/shared/shared.service';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  category = 'clothes';
+  category = 'Clothes';
   filter = '';
-  products: Product[] = [];
-   loading = false;
+  products: {
+    Clothes: Product[],
+    Shoes: Product[]
+  };
+  loading = false;
   constructor(private shared: SharedService, private router: Router) {}
   ngOnInit() {
     this.shared.isLoading.subscribe((v) => {
     this.loading = v;
     });
     this.shared.setTitle(' Products');
-    this.fetchProducts();
+    this.initialiseProducts();
   }
-  fetchProducts() {
-    this.shared.getProducts().subscribe(products => this.products = products);
+  initialiseProducts() {
+    this.products = {
+      Clothes : new Array<Product>(),
+      Shoes : new Array<Product>()
+    };
+    this.fetchProducts('Clothes');
+  }
+  fetchProducts(category: string) {
+    console.log(this.products[category].length);
+    const length = this.products[category].length;
+    if (!this.loading) {
+      this.shared.getProducts(category, length).subscribe(products => {
+        console.log(products);
+        products.forEach(product => {
+          this.products[category].push(product);
+        });console.log(this.products);
+      });
+    }
   }
   getProductDetails(product: Product) {
-     this.router.navigateByUrl('/products/' + product._id);
+     this.router.navigateByUrl('/products/' + product._id, {state: {data: product}});
   }
   tabChange(event) {
     this.category = event.tab.textLabel;
+    this.fetchProducts(this.category);
   }
 }

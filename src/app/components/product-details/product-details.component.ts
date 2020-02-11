@@ -20,7 +20,12 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.addedToCart = false;
+    if (history.state.data) {
+      console.log(history.state.data);
+      this.product = history.state.data;
+    } else {
     this.fetchProduct();
+    }
   }
   fetchProduct() {
     const id = this.route.snapshot.params.id;

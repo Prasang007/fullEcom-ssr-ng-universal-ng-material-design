@@ -1,47 +1,47 @@
-<h1>Details of Order By {{order.userName}}</h1>
+<h1>Details of Order By {{order?.placedBy}}</h1>
 <button mat-button color="primary" (click)="goBack()"  >
     <mat-icon>
       arrow_back
     </mat-icon>
 </button>
 
-<button mat-button (click)="cancelOrder()"  style="background-color: rgb(51, 14, 78); color:white;  position: absolute;right:36px;">
+<button *ngIf="order?.status !=='Cancelled'" mat-button (click)="cancelOrder()"  style="background-color: rgb(51, 14, 78); color:white;  position: absolute;right:36px;">
   <mat-icon>delete</mat-icon>
 </button>
 <div class="order-container">
   <div class="order-details">
     <div style="width: 30%">
-    <img src="{{order.productImage}}">
+    <img src="{{order?.productImage}}">
     </div>
     <div style="width: 70%" >
-      <h3>{{order.productName}}</h3>
+      <h3 style="flex:auto">{{order?.productName}}</h3>
       <hr>
-    <h5 *ngIf="order.scheduled"  >Scheduled on : {{order.scheduled}}</h5>
-      <p>Quantity: {{order.quantity}}</p>
-      <p>Price: {{order.price}}</p>
-      <p>Total: {{order.total}}</p>
-      <p>Status: {{order.status}}</p>
-      <h5>Ordered by {{order.userName}}</h5>
+    <h5 *ngIf="order?.scheduled"  >Scheduled on : {{order?.scheduled}}</h5>
+      <p>Quantity: {{order?.quantity}}</p>
+      <p>Price: {{order?.price}}</p>
+      <p>Total: {{order?.total}}</p>
+      <p>Status: <mat-chip *ngIf="order?.status ==='Delivered'"  color="primary" selected>{{order?.status}}</mat-chip><mat-chip *ngIf="order?.status ==='Accepted'"  color="accent" selected>{{order?.status}}</mat-chip><mat-chip *ngIf="order?.status ==='Pending'"  color="warn" selected>{{order?.status}}</mat-chip><mat-chip *ngIf="order?.status ==='Shipped'"  color="primary" selected>{{order?.status}}</mat-chip><mat-chip *ngIf="order?.status ==='Cancelled'"  color="primary" selected>{{order?.status}}</mat-chip></p>
+      <h5>Ordered for {{order?.userName}} Ordered by {{order?.placedBy}}</h5>
     </div>
   </div>
-<div>
+<div *ngIf="order?.status !=='Cancelled'" >
   <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
   <mat-horizontal-stepper #stepper [selectedIndex]="step">
-      <mat-step >
+      <mat-step #a1 >
           <ng-template matStepLabel>Ordered</ng-template>
-          <button mat-button matStepperNext (click)="increaseProgress()" > Confirmed
+          <button mat-button matStepperNext (click)="increaseProgress(a1)" > Confirm Order
           <mat-icon>arrow_forward_ios</mat-icon>
         </button>
       </mat-step>
-      <mat-step >
+      <mat-step #a2 >
         <ng-template matStepLabel>Confirmed</ng-template>
-        <button mat-button matStepperNext (click)="increaseProgress()" > Shipped
+        <button mat-button matStepperNext (click)="increaseProgress(a2)" >Shipp Order
         <mat-icon>arrow_forward_ios</mat-icon>
       </button>
     </mat-step>
-      <mat-step >
+      <mat-step #a3 >
           <ng-template matStepLabel>Shipped</ng-template>
-          <button mat-button matStepperNext (click)="increaseProgress()" > Delivered
+          <button mat-button matStepperNext (click)="increaseProgress(a3)" > Deliver Order
           <mat-icon>arrow_forward_ios</mat-icon>
         </button>
       </mat-step>

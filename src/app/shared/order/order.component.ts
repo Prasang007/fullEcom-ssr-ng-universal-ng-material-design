@@ -1,8 +1,6 @@
 import { SharedService } from './../shared.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { Order } from 'src/app/orders';
 import { MatTableDataSource } from '@angular/material/table';
-import { currentId } from 'async_hooks';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,16 +10,19 @@ import { Router } from '@angular/router';
 })
 export class OrderComponent implements OnInit {
   dataSource;
-  columns = ['Unit Price', 'Quantity' , 'Shipping Address', 'Status', 'Total'];
+  columns = ['ProductName', 'Unit Price', 'Quantity' , 'Shipping Address', 'Status', 'Total'];
   constructor(private shared: SharedService, private router: Router) { }
-
+  loading = false;
   ngOnInit() {
+    this.shared.isLoading.subscribe((v) => {
+    this.loading = v;
+    });
     this.getOrders();
     this.shared.setTitle('Orders');
   }
   getOrders() {
   this.shared.getMyOrders(this.shared.currentUser._id).subscribe( orders => {
-    this.dataSource = new MatTableDataSource(orders);
+    this.dataSource = new MatTableDataSource(orders.reverse());
     });
   }
   applyFilter(filterValue: string) {

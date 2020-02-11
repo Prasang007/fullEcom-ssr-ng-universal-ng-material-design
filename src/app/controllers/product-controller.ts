@@ -6,13 +6,14 @@ import product from '../models/products';
 
 class ProductController {
   static getAllProducts = (req: Request, res: Response, next: NextFunction) => {
-    Product.find((error, data) => {
+    Product.find({category: req.query.category}, (error, data) => {
       if (error) {
           return next(error);
       } else {
           res.json(data);
       }
-  });
+  // tslint:disable-next-line: radix
+  }).skip(parseInt(req.query.skip)).limit(4);
 }
 
 static getProduct = (req: Request, res: Response, next: NextFunction) => {

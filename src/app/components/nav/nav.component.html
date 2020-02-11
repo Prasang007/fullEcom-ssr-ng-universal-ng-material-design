@@ -22,7 +22,7 @@
           </button>
           <mat-menu #notif="matMenu" style="background-color: #807d7d8a;" >
             <div *ngFor="let notification of shared.notifications; let i = index"  >
-            <p mat-menu-item style=" padding: 10px;text-align: justify;" routerLink="order-status" state="{data:{{notification.order}}}"
+            <p mat-menu-item style=" padding: 10px;text-align: justify; margin:0;" (click)="navigate(notification.order._id)"
             class="{{notification.status}}" >{{notification.order.placedBy}} has ordered {{notification.order.quantity}} {{notification.order.productName}} with a total of {{notification.order.total}}.  </p>
             </div>
           </mat-menu>

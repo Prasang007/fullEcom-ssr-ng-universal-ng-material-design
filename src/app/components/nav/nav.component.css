@@ -3,4 +3,12 @@
 }
 .Unread {
   background-color: #807d7d8a;
+  animation-name: seen;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes seen {
+from {background-color: #807d7d8a;}
+to {background-color: white;}
 }

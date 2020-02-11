@@ -5,6 +5,7 @@ img{
 .productContainer {
   display: flex;
   justify-content: center;
-  margin: 0px;
+  margin: auto;
   margin-bottom:100px;
+  max-width: 750px;
 }

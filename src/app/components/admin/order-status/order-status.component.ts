@@ -13,14 +13,25 @@ export class OrderStatusComponent implements OnInit {
   constructor(private shared: SharedService, private location: Location) { }
   order: Order;
   ngOnInit() {
-    this.order = history.state.data;
-    this.progressAssign();
+    console.log(history.state);
+    if (history.state.id) {
+      this.getOrder(history.state.id);
+    } else {
+      this.order = history.state.data;
+      this.progressAssign();
+    }
   }
   cancelOrder() {
     this.order.status = 'Cancelled';
     this.shared.changeStatus(this.order).subscribe( success => {
     });
     this.location.back();
+  }
+  getOrder(id: string) {
+    this.shared.getOrder(id).subscribe(order => {
+      this.order = order;
+      this.progressAssign();
+    });
   }
   progressAssign() {
     switch (this.order.status) {
@@ -42,7 +53,8 @@ export class OrderStatusComponent implements OnInit {
         break;
     }
   }
-  increaseProgress() {
+  increaseProgress(value) {
+    value.editable = false;
     switch (this.progress) {
       case 25:
         this.order.status = 'Accepted';

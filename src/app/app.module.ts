@@ -25,6 +25,7 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
 import { UserDetailsComponent } from './components/admin/user-details/user-details.component';
 import { LoaderInterceptor } from './shared/loader.intercepter';
 import { ManageAccountComponent } from './components/manage-account/manage-account.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const config = new AuthServiceConfig([
   {
@@ -67,6 +68,7 @@ export function provideConfig() {
     FormsModule,
     SocialLoginModule,
     ReactiveFormsModule,
+    InfiniteScrollModule,
     SharedModule
   ],
   exports: [

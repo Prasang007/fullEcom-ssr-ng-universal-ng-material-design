@@ -16,10 +16,10 @@ class OrderController {
       });
     });
   }
-  static deleteOrder = (req: Request, res: Response, next: NextFunction) => {
-    order.findByIdAndRemove(req.params.id, (err, data) => {
-    });
-  }
+  // static deleteOrder = (req: Request, res: Response, next: NextFunction) => {
+  //   order.findByIdAndRemove(req.params.id, (err, data) => {
+  //   });
+  // }
   static createOrder = (req: Request, res: Response, next: NextFunction) => {
     const newOrder = new order(req.body);
     newOrder.save((err, data) => {

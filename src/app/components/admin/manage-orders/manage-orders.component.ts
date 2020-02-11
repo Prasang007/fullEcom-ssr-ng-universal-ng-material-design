@@ -10,7 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ManageOrdersComponent implements OnInit {
   dataSource;
-  columns = ['Name', 'Unit Price', 'Quantity' , 'Shipping Address', 'Username' , 'Status', 'Total'];
+  columns = ['Name', 'ProductName', 'Unit Price', 'Quantity' , 'Shipping Address', 'Username' , 'Status', 'Total'];
   constructor(private shared: SharedService, private router: Router) { }
 
   ngOnInit() {
@@ -19,7 +19,7 @@ export class ManageOrdersComponent implements OnInit {
   }
   getOrders() {
   this.shared.getOrders().subscribe( orders => {
-    this.dataSource = new MatTableDataSource(orders);
+    this.dataSource = new MatTableDataSource(orders.reverse());
     });
   }
   applyFilter(filterValue: string) {

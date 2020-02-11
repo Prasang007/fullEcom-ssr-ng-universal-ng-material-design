@@ -8,7 +8,10 @@
           <th mat-header-cell *matHeaderCellDef> Total </th>
           <td mat-cell *matCellDef="let order"> {{order.total}} </td>
         </ng-container>
-
+        <ng-container matColumnDef="ProductName">
+            <th mat-header-cell *matHeaderCellDef> Product Name </th>
+            <td mat-cell *matCellDef="let order"> {{order.productName}} </td>
+          </ng-container>
         <ng-container matColumnDef="Name">
           <th mat-header-cell *matHeaderCellDef> Name </th>
           <td mat-cell *matCellDef="let order"> {{order.userName}} </td>
@@ -38,6 +41,7 @@
                 <mat-chip *ngIf="order.status ==='Accepted'"  color="accent" selected>{{order.status}}</mat-chip>
                 <mat-chip *ngIf="order.status ==='Pending'"  color="warn" selected>{{order.status}}</mat-chip>
                 <mat-chip *ngIf="order.status ==='Shipped'"  color="primary" selected>{{order.status}}</mat-chip>
+                <mat-chip *ngIf="order.status ==='Cancelled'"  color="primary" selected>{{order.status}}</mat-chip>
             </td>
           </ng-container>
         <tr mat-header-row *matHeaderRowDef="columns"></tr>

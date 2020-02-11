@@ -1,11 +1,11 @@
 
-<mat-form-field>
-  <input matInput placeholder="Search for products" [(ngModel)]="filter" >
-</mat-form-field>
 <mat-tab-group (selectedTabChange)="tabChange($event)" >
-    <mat-tab label="Clothes">
+    <mat-tab label="Clothes" infiniteScroll
+      [infiniteScrollDistance]="10"
+      [infiniteScrollThrottle]="50"
+      (scrolled)="fetchProducts(category)" >
         <div class="product-container">
-            <div *ngFor="let product of products | filter: category: 'category' | filter: filter:'name'"
+            <div *ngFor="let product of products[category] "
             style="flex: auto;" >
 
                 <app-card [received]="product" [description]="product['price']"
@@ -14,9 +14,12 @@
             </div>
         </div>
       </mat-tab>
-    <mat-tab label="Shoes">
+    <mat-tab label="Shoes" infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="fetchProducts(category)">
       <div class="product-container">
-            <div *ngFor="let product of products | filter: category: 'category' | filter: filter:'name'"
+            <div *ngFor="let product of products[category]"
             style="flex: auto;" >
 
                 <app-card [received]="product" [description]="product['price']"

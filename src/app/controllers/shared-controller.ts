@@ -82,6 +82,7 @@ class SharedController {
           });
         });
       }
+      res.json(true);
   });
 }
   // static mail = (data) =>  {

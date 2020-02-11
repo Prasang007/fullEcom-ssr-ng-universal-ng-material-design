@@ -25,24 +25,32 @@ export class NavComponent implements OnInit {
     this.shared.saveNotification().subscribe(data => {
     });
     this.shared.notifications.forEach(notif => {
-      setTimeout(() => { notif.status = 'Read'; }, 1500);
+      setTimeout(() => { notif.status = 'Read'; }, 5000);
     });
     this.shared.unreadNotifs = 0;
   }
   toggleAdmin() {
     this.shared.isAdmin = !this.shared.isAdmin;
   }
+  navigate(id: string) {
+    this.router.navigateByUrl('/order-status', {state: {id}});
+  }
   signout() {
     if (this.shared.isSocial) {
       this.authService.signOut();
     }
-    this.shared.loggedIn = false;
-    this.shared.isAdmin = false;
+    if ( !this.shared.isAdmin) {
     this.shared.updateCart({cart: this.shared.currentUser.cart, _id: this.shared.currentUser._id}).subscribe(success => {
       this.shared.openSnackbar(success, 'Close' );
       this.shared.currentUser = new User();
+      this.shared.loggedIn = false;
       this.router.navigateByUrl('/login');
     });
-
+    } else {
+      this.shared.isAdmin = false;
+      this.shared.loggedIn = false;
+      this.shared.currentUser = new User();
+      this.router.navigateByUrl('/login');
+    }
   }
 }

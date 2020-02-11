@@ -100,7 +100,15 @@ export class LoginComponent implements OnInit {
         this.shared.loggedIn = true;
         if (data[0].admin) {
           this.shared.isAdmin = true;
-          this.router.navigateByUrl('/users');
+          this.shared.getNotification().subscribe(notifs => {
+            notifs.forEach(notif => {
+              if (notif.status === 'Unread') {
+                this.shared.unreadNotifs = this.shared.unreadNotifs + 1;
+              }
+            });
+            this.shared.notifications = notifs.reverse();
+            this.router.navigateByUrl('/users');
+          });
         } else {
         this.router.navigateByUrl('/products');
         }

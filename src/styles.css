@@ -5,7 +5,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 ::-webkit-scrollbar {
   width: 2.5px;
   }
-
+  ::-webkit-scrollbar :hover {
+    width: 7.5px;
+    }
   ::-webkit-scrollbar-thumb {
   background: indigo;
   border-radius: 10px;
@@ -21,4 +23,8 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance:textfield;
+}
+mat-chip {
+  padding: 6px;
+  border-radius: 14px;
 }
