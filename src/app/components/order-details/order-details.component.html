@@ -19,7 +19,8 @@
       <p>Status:  <mat-chip *ngIf="order.status ==='Delivered'"  color="primary" selected>{{order.status}}</mat-chip>
         <mat-chip *ngIf="order.status ==='Accepted'"  color="accent" selected>{{order.status}}</mat-chip>
         <mat-chip *ngIf="order.status ==='Pending'"  color="warn" selected>{{order.status}}</mat-chip>
-        <mat-chip *ngIf="order.status ==='Shipped'"  color="primary" selected>{{order.status}}</mat-chip></p>
+        <mat-chip *ngIf="order.status ==='Shipped'"  color="primary" selected>{{order.status}}</mat-chip>
+        <mat-chip *ngIf="order.status ==='Cancelled'"  color="primary" selected>{{order.status}}</mat-chip></p>
       <h5>Ordered by {{order.userName}}</h5>
     </div>
   </div>

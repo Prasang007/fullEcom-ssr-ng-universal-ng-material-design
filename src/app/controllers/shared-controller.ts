@@ -85,29 +85,29 @@ class SharedController {
       res.json(true);
   });
 }
-  // static mail = (data) =>  {
-  //   const transport = nodemailer.createTransport({
-  //     host: 'smtp.mailtrap.io',
-  //     port: 2525,
-  //     auth: {
-  //       user: '55301ca6e03641',
-  //       pass: '92eb8ac6ad34e8'
-  //     }
-  //   });
-  //   const mailOptions = {
-  //     from: data.email,
-  //     to: 'prasangg.ongraph@gmail.com',
-  //     subject: 'Order Placed by ' + data.placedBy,
-  //     // tslint:disable-next-line: max-line-length
-  //     text: 'An Order was placed by ' + data.placedBy + 'at' + data.placed + 'which contains' + data.quantity + ' ' + data.productName + 'with a total amount of' + data.total
-  // };
-  //   transport.sendMail(mailOptions, (error, info) => {
-  //   if (error) {
-  //       return console.log(error);
-  //   }
-  //   console.log('Message sent: %s', info.messageId);
-  //   });
-  // }
+  static mail = (data) =>  {
+    const transport = nodemailer.createTransport({
+      host: 'smtp.mailtrap.io',
+      port: 2525,
+      auth: {
+        user: '55301ca6e03641',
+        pass: '92eb8ac6ad34e8'
+      }
+    });
+    const mailOptions = {
+      from: data.email,
+      to: 'prasangg.ongraph@gmail.com',
+      subject: 'Order Placed by ' + data.placedBy,
+      // tslint:disable-next-line: max-line-length
+      text: 'An Order was placed by ' + data.placedBy + 'at' + data.placed + 'which contains' + data.quantity + ' ' + data.productName + 'with a total amount of' + data.total
+  };
+    transport.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Message sent: %s', info.messageId);
+    });
+  }
 }
 export default SharedController;
 

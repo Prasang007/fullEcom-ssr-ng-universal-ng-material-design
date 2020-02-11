@@ -32,14 +32,12 @@ export class ProductsComponent implements OnInit {
     this.fetchProducts('Clothes');
   }
   fetchProducts(category: string) {
-    console.log(this.products[category].length);
     const length = this.products[category].length;
     if (!this.loading) {
       this.shared.getProducts(category, length).subscribe(products => {
-        console.log(products);
         products.forEach(product => {
           this.products[category].push(product);
-        });console.log(this.products);
+        });
       });
     }
   }

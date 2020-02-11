@@ -12,7 +12,7 @@
          <input matInput placeholder="Name" formControlName="name" [value]="currentUser.name" >
         </mat-form-field>
       </p>
-      <p class="error" *ngIf=" updateForm.controls['name'].errors?.required && updateForm.controls['name'].touched">This is required</p>
+      <p class="error" *ngIf=" updateForm.controls['name'].errors?.required && updateForm.controls['name'].touched && updateForm.controls['name'].value ===''">This is required</p>
 
       <div class="button">
         <button type="submit" mat-button [disabled]="" >Update</button>

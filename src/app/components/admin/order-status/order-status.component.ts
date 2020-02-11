@@ -13,7 +13,6 @@ export class OrderStatusComponent implements OnInit {
   constructor(private shared: SharedService, private location: Location) { }
   order: Order;
   ngOnInit() {
-    console.log(history.state);
     if (history.state.id) {
       this.getOrder(history.state.id);
     } else {

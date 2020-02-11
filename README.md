@@ -29,3 +29,4 @@ Use `npm run` go which starts at http://localhost:4000/
 3. Manipulate status of order. 
 4. Cancel Orders.
 5. View detals of all the Users.
+6. When a user places an order an email is sent to the admin, and has a notification of all the recently placed orders.
