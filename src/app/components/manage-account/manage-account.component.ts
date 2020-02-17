@@ -30,7 +30,7 @@ export class ManageAccountComponent implements OnInit {
   }
   initializeForm() {
     this.updateForm =  new FormGroup({
-      name: new FormControl('', Validators.required),
+      name: new FormControl(this.currentUser.name , Validators.required),
       email: new FormControl({value: '', disabled: true}, [ Validators.required, validateEmail]),
     });
     this.newPsdForm = new FormGroup({
@@ -58,10 +58,14 @@ export class ManageAccountComponent implements OnInit {
     });
   }
   setNewPsd(newPsd) {
-    const user = {_id: this.shared.currentUserValue._id, password: newPsd};
-    this.shared.updatePsd(user).subscribe(success => {
-      this.shared.openSnackbar( success , 'Close');
-      this.router.navigateByUrl('/products');
-    });
+    const user = {email: this.shared.currentUserValue.email, password: newPsd};
+    if (this.newPsdForm.valid) {
+      this.shared.updatePsd(user).subscribe(success => {
+        this.shared.openSnackbar( success , 'Close');
+        this.router.navigateByUrl('/products');
+      });
+    } else {
+      this.shared.openSnackbar('Enter Valid Password', 'Close');
+    }
   }
 }

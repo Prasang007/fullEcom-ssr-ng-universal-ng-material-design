@@ -1,5 +1,5 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Injectable, Inject, Optional } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Product } from '../product';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -72,8 +72,8 @@ export class SharedService {
   signUp(signupCred): Observable<string> {
     return this.http.post<string>(this.apiUrl + 'shared/signup', signupCred, httpOptions );
   }
-  verifyEmail(token) {
-    return this.http.post(this.apiUrl + 'shared/verifyEmail', token, httpOptions);
+  verifyJwt(token) {
+    return this.http.post(this.apiUrl + 'shared/verifyJwt', token, httpOptions);
   }
   // ---------------------------------------SHARED RESOURCES----------------------------------------------
   public get currentUserValue(): User {
@@ -144,6 +144,9 @@ export class SharedService {
   }
   updateCart(value) {
     return this.http.put<string>(this.apiUrl + 'users/updateCart', value, httpOptions);
+  }
+  forgotPsdEmail(email) {
+    return this.http.post<string>(this.apiUrl + 'users/emailForgotPsd', {email}, httpOptions);
   }
   // ------------------------------------ADMIN---------------------------------------------------------
   getNotification() {

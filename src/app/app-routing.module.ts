@@ -16,11 +16,14 @@ import { AdminGuard } from './shared/admin.guard';
 import { CartComponent } from './components/cart/cart.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { VerfiyEmailComponent } from './components/verfiy-email/verfiy-email.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'verifyEmail/:id', component: VerfiyEmailComponent},
+  {path: 'forgotPassword/:id', component: ForgotPasswordComponent},
+  {path: 'login/forgotPassword', component: ForgotPasswordComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'products', component: ProductsComponent, canActivate: [LoginInGuard] },
   {path: 'orders', component: OrderComponent, canActivate: [LoginInGuard]},

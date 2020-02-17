@@ -24,6 +24,7 @@
       <mat-icon>{{showPassord ? 'visibility' : 'visibility_off'}}</mat-icon>
       </button>
   </mat-form-field>
+  <a [routerLink]="['forgotPassword']" [state]="{ email: loginForm.controls['email'].value }"><span>Forgot Password...... ?</span></a>
 </p>
 <p class="error"
   *ngIf=" loginForm.controls['password'].errors?.required

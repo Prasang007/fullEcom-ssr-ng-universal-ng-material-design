@@ -18,7 +18,7 @@ loading = false;
       });
     const params = this.route.params['value'];
     console.log(params);
-    this.shared.verifyEmail(params).subscribe(data => {
+    this.shared.verifyJwt(params).subscribe(data => {
       const payload = data;
       this.shared.verificationEmailcheck('email', payload['email']).subscribe(user => {
         console.log(user);

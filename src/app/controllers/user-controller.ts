@@ -1,7 +1,8 @@
 import user from '../models/users';
 import { Request, Response, NextFunction } from 'express';
 import md5 from 'md5';
-
+import nodemailer from 'nodemailer';
+import * as jwt from 'jsonwebtoken';
 
 class UserController {
   static getAllusers = (req: Request, res: Response, next: NextFunction) => {
@@ -81,10 +82,10 @@ static checkPassword = (req: Request, res: Response, next: NextFunction) => {
 }
 
 static changePassword =  (req: Request, res: Response, next: NextFunction) => {
-    user.findById(req.body._id, (err, data) => {
+    user.find({email: req.body.email}, (err, data) => {
       req.body.password = md5(req.body.password);
-      data.password = req.body.password;
-      data.save((er, dta) => {
+      data[0].password = req.body.password;
+      data[0].save((er, dta) => {
         if (er) {
           res.status(404);
           res.json('Password Change Error');
@@ -94,7 +95,7 @@ static changePassword =  (req: Request, res: Response, next: NextFunction) => {
       });
     });
   }
-  static updateTotalOrder =  (req: Request, res: Response, next: NextFunction) => {
+static updateTotalOrder =  (req: Request, res: Response, next: NextFunction) => {
     user.findById(req.body._id, (err, data) => {
       if (req.body.task === 'add') {
        data.totalOrders = +data.totalOrders + +req.body.totalOrders;
@@ -111,5 +112,35 @@ static changePassword =  (req: Request, res: Response, next: NextFunction) => {
       });
     });
   }
+static emailForgotPsd = (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.body);
+  const token = jwt.sign(
+    req.body,
+    'jnsfkjgsdfgnsdjfgosdjfgiosdjfgojsdfiojdoifgosdfgosdjfosjdfgijsdfgjodj', {expiresIn: 120});
+  console.log(token);
+  res.json('Email sent');
+  const transport = nodemailer.createTransport({
+        host: 'smtp.mailtrap.io',
+        port: 2525,
+        auth: {
+          user: '55301ca6e03641',
+          pass: '92eb8ac6ad34e8'
+        }
+      });
+  const mailOptions = {
+    from: 'admin@gmail.com',
+    to: req.body.email,
+    subject: 'Forgot Password',
+// tslint:disable-next-line: max-line-length
+    html: '<p>Click <a href="https://localhost:4000/forgotPsd' + token + '">here</a> to reset your password. Valid only for 2 minutes</p>'
+    };
+  transport.sendMail(mailOptions, (error, info) => {
+  if (error) {
+      return console.log(error);
+  }
+  console.log('Message sent: %s', info.messageId);
+  });
+
+}
 }
 export default UserController;

@@ -51,8 +51,9 @@ class SharedController {
       res.json(data);
     });
   }
-  static verifyEmail = (req: Request, res: Response, next: NextFunction) => {
+  static verifyJwt = (req: Request, res: Response, next: NextFunction) => {
     console.log('prapssap')
+    console.log(req.body)
     jwt.verify(req.body.id, 'jnsfkjgsdfgnsdjfgosdjfgiosdjfgojsdfiojdoifgosdfgosdjfosjdfgijsdfgjodj', (err,payload) => {
     res.json(payload);
     });
@@ -104,27 +105,27 @@ class SharedController {
       { userId: data._id, username: data.name, email: data.email  },
       'jnsfkjgsdfgnsdjfgosdjfgiosdjfgojsdfiojdoifgosdfgosdjfosjdfgijsdfgjodj');
     console.log(token);
-  //   const transport = nodemailer.createTransport({
-  //     host: 'smtp.mailtrap.io',
-  //     port: 2525,
-  //     auth: {
-  //       user: '55301ca6e03641',
-  //       pass: '92eb8ac6ad34e8'
-  //     }
-  //   });
-  //   const mailOptions = {
-  //     from: 'admin@gmail.com',
-  //     to: data.email,
-  //     subject: 'Verify your Email ID',
-  //     // tslint:disable-next-line: max-line-length
-  //     text: 'Verify your Email ID by clicking this link https://localhost:4000/verifyEmail/' + token
-  // };
-  //   transport.sendMail(mailOptions, (error, info) => {
-  //   if (error) {
-  //       return console.log(error);
-  //   }
-  //   console.log('Message sent: %s', info.messageId);
-  //   });
+    const transport = nodemailer.createTransport({
+      host: 'smtp.mailtrap.io',
+      port: 2525,
+      auth: {
+        user: '55301ca6e03641',
+        pass: '92eb8ac6ad34e8'
+      }
+    });
+    const mailOptions = {
+      from: 'admin@gmail.com',
+      to: data.email,
+      subject: 'Verify your Email ID',
+      // tslint:disable-next-line: max-line-length
+      html: '<p>Click <a href="https://localhost:4000/verifyEmail' + token + '">here</a> to reset your password. Valid only for 2 minutes</p>'
+  };
+    transport.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Message sent: %s', info.messageId);
+    });
   }
   static mailOrderPlace = (data) =>  {
     const transport = nodemailer.createTransport({

@@ -26,7 +26,6 @@ export class NavComponent implements OnInit {
   }
   getNotification() {
     this.shared.getNotification().subscribe(notifs => {
-      console.log(notifs);
       notifs.forEach(notif => {
         if (notif.status === 'Unread') {
           this.shared.unreadNotifs = this.shared.unreadNotifs + 1;

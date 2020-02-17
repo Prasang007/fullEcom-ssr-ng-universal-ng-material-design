@@ -11,6 +11,9 @@ button {
   background-color: rgb(105, 44, 148);
   color: white;
 }
+button[disabled] {
+  background-color: #692c9461;
+}
 .error {
   padding: 6px;
   width: 300px;

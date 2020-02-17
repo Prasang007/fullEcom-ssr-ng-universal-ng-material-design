@@ -107,7 +107,6 @@ export class LoginComponent implements OnInit {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
     this.shared.login(value).subscribe(userNToken => {
-      console.log(userNToken);
       if (userNToken) {
         const user: User = userNToken['user'];
         user.token = userNToken['token'];

@@ -28,6 +28,8 @@ import { ManageAccountComponent } from './components/manage-account/manage-accou
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgtUniversalModule } from '@ng-toolkit/universal';
 import { VerfiyEmailComponent } from './components/verfiy-email/verfiy-email.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ErrorNotfoundComponent } from './components/error-notfound/error-notfound.component';
 
 const config = new AuthServiceConfig([
   {
@@ -62,6 +64,8 @@ export function provideConfig() {
     UserDetailsComponent,
     ManageAccountComponent,
     VerfiyEmailComponent,
+    ForgotPasswordComponent,
+    ErrorNotfoundComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
