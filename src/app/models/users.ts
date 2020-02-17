@@ -10,7 +10,8 @@ const UsersSchema: mongoose.Schema = new mongoose.Schema(
     email: {type: String},
     admin: {type: Boolean, default: false},
     totalOrders: {type: Number, default: 0},
-    cart : {type: Array, default: []}
+    cart : {type: Array, default: []},
+    status : {type: Boolean, default: false }
   }
 );
 

@@ -25,7 +25,7 @@ export class ManageAccountComponent implements OnInit {
     this.allowChangePsd = false;
     this.showPassord = false;
     this.shared.setTitle('Manage Account ');
-    this.currentUser = this.shared.currentUser;
+    this.currentUser = this.shared.currentUserValue;
     this.initializeForm();
   }
   initializeForm() {
@@ -41,14 +41,14 @@ export class ManageAccountComponent implements OnInit {
     });
   }
   updateAccount(formValue) {
-    const value2 = {_id: this.shared.currentUser._id, name: formValue.name };
+    const value2 = {_id: this.shared.currentUserValue._id, name: formValue.name };
     this.shared.updateAccount(value2).subscribe( success => {
       this.shared.openSnackbar( success , 'Close');
-      this.shared.currentUser.name = formValue.name;
+      this.shared.currentUserValue.name = formValue.name;
     });
   }
   checkPsd(oldPassword: string) {
-    const user = {_id: this.shared.currentUser._id, password: oldPassword};
+    const user = {_id: this.shared.currentUserValue._id, password: oldPassword};
     this.shared.checkPsd(user).subscribe(correctPsd => {
       if (correctPsd) {
         this.allowChangePsd = true;
@@ -58,7 +58,7 @@ export class ManageAccountComponent implements OnInit {
     });
   }
   setNewPsd(newPsd) {
-    const user = {_id: this.shared.currentUser._id, password: newPsd};
+    const user = {_id: this.shared.currentUserValue._id, password: newPsd};
     this.shared.updatePsd(user).subscribe(success => {
       this.shared.openSnackbar( success , 'Close');
       this.router.navigateByUrl('/products');

@@ -19,17 +19,16 @@
         This is required</p>
 <p>
   <mat-form-field>
-    <input type="password" matInput placeholder="Password" formControlName="password" #pass>
+    <input [type]="showPassord? 'text' : 'password'" matInput placeholder="Password" formControlName="password" #pass>
+    <button type="button" mat-icon-button matSuffix (click)="showPassord = !showPassord" style="background-color: white; font-size: 22px;">
+      <mat-icon>{{showPassord ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </button>
   </mat-form-field>
 </p>
 <p class="error"
   *ngIf=" loginForm.controls['password'].errors?.required
   && loginForm.controls['password'].touched">
   This is required</p>
-        <a> <mat-icon *ngIf="!showPassord" (click)="showPassord = !showPassord; pass.type = showPassord ? 'text':'password'  ">
-            visibility</mat-icon></a>
-      <a>  <mat-icon *ngIf="showPassord" (click)="showPassord = !showPassord; pass.type = showPassord ? 'text':'password'  ">
-                visibility_off</mat-icon></a>
 <div class="button">
   <button type="submit" mat-button >Login</button>
 </div>

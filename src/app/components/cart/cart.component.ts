@@ -22,23 +22,23 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cart = new MatTableDataSource(this.shared.currentUser.cart);
+    this.cart = new MatTableDataSource(this.shared.currentUserValue.cart);
     this.getTotalCost();
   }
 
 
   // <----------------------------------Cart--------------------------------------->
   getCart() {
-    return this.shared.currentUser.cart;
+    return this.shared.currentUserValue.cart;
   }
 
   removeFromCart(i) {
     if (!i) {
-      this.shared.currentUser.cart.shift();
+      this.shared.currentUserValue.cart.shift();
     } else {
-    this.shared.currentUser.cart.splice(i, 1);
+    this.shared.currentUserValue.cart.splice(i, 1);
   }
-    this.cart = new MatTableDataSource(this.shared.currentUser.cart);
+    this.cart = new MatTableDataSource(this.shared.currentUserValue.cart);
     this.getTotalCost();
   }
 
@@ -53,7 +53,7 @@ export class CartComponent implements OnInit {
 // <--------------------------------------------Place Order------------------------------->
 
   placeOrder(value) {
-    if (this.shared.currentUser.cart[0]['price']) {
+    if (this.shared.currentUserValue.cart[0]['price']) {
       this.getCart().forEach(order => {
         if (order.price) {
         order.total = order.price;
@@ -61,20 +61,20 @@ export class CartComponent implements OnInit {
         order.address = value.address;
         order.userName = value.name;
         order.status = 'Pending';
-        order.userId = this.shared.currentUser._id;
-        order.orderId = this.shared.currentUser.totalOrders + 1;
-        order.email = this.shared.currentUser.email;
-        order.placedBy = this.shared.currentUser.name;
+        order.userId = this.shared.currentUserValue._id;
+        order.orderId = this.shared.currentUserValue.totalOrders + 1;
+        order.email = this.shared.currentUserValue.email;
+        order.placedBy = this.shared.currentUserValue.name;
         this.shared.placeOrder(order).subscribe(success => {
           this.shared.openSnackbar(success, 'Close');
         });
         }
       });
-      this.shared.updateTotalOrder(this.shared.currentUser._id, this.shared.currentUser.cart.length, 'add').subscribe(success1 => {
+      this.shared.updateTotalOrder(this.shared.currentUserValue._id, this.shared.currentUserValue.cart.length, 'add').subscribe(success1 => {
         this.shared.openSnackbar(success1, 'Close');
       });
-      this.shared.currentUser.cart = [];
-      this.cart = new MatTableDataSource(this.shared.currentUser.cart);
+      this.shared.currentUserValue.cart = [];
+      this.cart = new MatTableDataSource(this.shared.currentUserValue.cart);
       this.getTotalCost();
       this.router.navigateByUrl('/orders');
     } else {

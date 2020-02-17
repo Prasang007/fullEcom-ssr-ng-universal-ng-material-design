@@ -18,6 +18,28 @@ static getUserBy = (req: Request, res: Response, next: NextFunction) => {
     res.json(data);
   });
 }
+static verficationEmailCheck =  (req: Request, res: Response, next: NextFunction) => {
+  console.log('sdasd')
+  user.find(req.query, (err, data) => {
+    console.log(data);
+    const bool = data[0].status;
+    console.log(bool);
+    if (bool) {
+      res.json(0);
+    } else {
+    data[0].status = true;
+    data[0].save((er, dta) => {
+      if (er) {
+        res.status(404);
+        res.json('Status Change Error');
+        return console.error(er);
+      }
+      console.log('ddasd');
+      return res.json(dta);
+    });
+  }
+  });
+}
 static updateName =  (req: Request, res: Response, next: NextFunction) => {
     user.findById(req.body._id, (err, data) => {
       data.name = req.body.name;

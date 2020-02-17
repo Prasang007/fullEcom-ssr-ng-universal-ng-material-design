@@ -7,7 +7,7 @@
     <h1 style="flex: auto;" >{{shared.page}}</h1>
          <a mat-button routerLinkActive="active" routerLink="/add-product" *ngIf="shared.isAdmin"><mat-icon >add_box</mat-icon></a>
           <a mat-button routerLinkActive="active" routerLink="/products" *ngIf="!shared.isAdmin"  >Products</a>
-          <a mat-button routerLinkActive="active" routerLink="/users"  >Users</a>
+          <a mat-button routerLinkActive="active" routerLink="/users" *ngIf="shared.isAdmin"  >Users</a>
           <a mat-button routerLinkActive="active" routerLink="/orders" *ngIf="!shared.isAdmin" >Orders</a>
           <a mat-button routerLinkActive="active" routerLink="/manage/orders" *ngIf="shared.isAdmin" >Manage Orders</a>
           <button mat-button [matMenuTriggerFor]="account">Account</button>
@@ -28,7 +28,7 @@
           </mat-menu>
 
           <a mat-button routerLinkActive="active" routerLink="/cart" *ngIf="!shared.isAdmin" >
-            <mat-icon [matBadge]="shared.currentUser.cart.length" matBadgeColor="warn" >shopping_cart</mat-icon>
+            <mat-icon [matBadge]="shared.currentUserValue.cart.length" matBadgeColor="warn" >shopping_cart</mat-icon>
           </a>
         <!-- <button mat-button (click)="toggleAdmin()">admin: {{shared.isAdmin}}</button> -->
 </mat-toolbar>

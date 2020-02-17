@@ -9,6 +9,8 @@ export class User {
     admin?: boolean;
     totalOrders?: number;
     cart?: Order[];
+    token?: string;
+    status?: boolean;
     constructor() {
       this.name = '';
       this.password = '';

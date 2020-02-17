@@ -18,6 +18,7 @@ export class UsersInfoComponent implements OnInit {
   ngOnInit() {
     this.shared.setTitle('All Users');
     this.fetchUsers();
+    console.log(this.shared.currentUserValue);
   }
   fetchUsers() {
     this.shared.getUsers().subscribe( users => {

@@ -13,7 +13,7 @@ class ProductController {
           res.json(data);
       }
   // tslint:disable-next-line: radix
-  }).skip(parseInt(req.query.skip)).limit(4);
+  }).skip(parseInt(req.query.skip)).limit(8);
 }
 
 static getProduct = (req: Request, res: Response, next: NextFunction) => {

@@ -1,4 +1,4 @@
-<mat-card (click)="gotClicked()" >
+<mat-card (click)="gotClicked()" [ngClass]="{'user':!received['category']}" >
   <mat-card-title>{{received.name}}</mat-card-title>
 <img mat-card-image src="{{received.image}}" class="{{received['category']}}" alt="photo of {{received.name}}">
   <mat-card-content>

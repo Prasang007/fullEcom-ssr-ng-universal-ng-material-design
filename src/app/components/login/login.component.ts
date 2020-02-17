@@ -38,50 +38,54 @@ export class LoginComponent implements OnInit {
 
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(da => {
-    this.authService.authState.subscribe(data => {
-      if (data) {
-      this.user = data;
-      this.shared.emailCheck(this.user.email).subscribe(data1 => {
-          if (data1) {
+      this.authService.authState.subscribe(data => {
+        if (data) {
+        this.user = data;
+        this.shared.emailCheck(this.user.email).subscribe(flag => {
+          if (flag) {
             this.shared.getUserBy('email', this.user.email).subscribe(user => {
-              this.shared.currentUser = user[0];
+              this.shared.localStorage.setItem('currentUser', JSON.stringify(user[0]));
+              this.shared.currentUserSubject.next(user[0]);
               this.shared.loggedIn = true;
               this.shared.isSocial = true;
               this.router.navigateByUrl('/products');
-            });
-          } else {
-            const newUser: User = {name: this.user.name, email: this.user.email, image: this.user.photoUrl, password: ''};
-            this.shared.signUpWithEmail(newUser).subscribe(user => {
-              this.shared.loggedIn = true;
-              this.shared.isSocial = true;
-              this.shared.currentUser = user;
-              this.router.navigateByUrl('/products');
-            });
-          }
-        });
-      }
+          });
+        } else {
+              const newUser: User = {name: this.user.name, email: this.user.email, image: this.user.photoUrl, password: ''};
+              this.shared.signUpWithEmail(newUser).subscribe(newUser1 => {
+                this.shared.loggedIn = true;
+                this.shared.isSocial = true;
+                this.shared.localStorage.setItem('currentUser', JSON.stringify(newUser1));
+                this.shared.currentUserSubject.next(newUser1);
+                this.router.navigateByUrl('/products');
+              });
+            }
+          });
+        }
+      });
     });
-  });
 }
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(da => {
       this.authService.authState.subscribe(data => {
         if (data) {
         this.user = data;
-        this.shared.emailCheck(this.user.email).subscribe(data1 => {
-            if (data1) {
-              this.shared.getUserBy('email', this.user.email).subscribe(user => {
-                this.shared.currentUser = user[0];
-                this.shared.loggedIn = true;
-                this.shared.isSocial = true;
-                this.router.navigateByUrl('/products');
-              });
-            } else {
+        this.shared.emailCheck(this.user.email).subscribe(flag => {
+          if (flag) {
+            this.shared.getUserBy('email', this.user.email).subscribe(user => {
+              this.shared.localStorage.setItem('currentUser', JSON.stringify(user[0]));
+              this.shared.currentUserSubject.next(user[0]);
+              this.shared.loggedIn = true;
+              this.shared.isSocial = true;
+              this.router.navigateByUrl('/products');
+          });
+        } else {
               const newUser: User = {name: this.user.name, email: this.user.email, image: this.user.photoUrl, password: ''};
-              this.shared.signUpWithEmail(newUser).subscribe(user => {
+              this.shared.signUpWithEmail(newUser).subscribe(newUser1 => {
                 this.shared.loggedIn = true;
                 this.shared.isSocial = true;
-                this.shared.currentUser = user;
+                this.shared.localStorage.setItem('currentUser', JSON.stringify(newUser1));
+                this.shared.currentUserSubject.next(newUser1);
                 this.router.navigateByUrl('/products');
               });
             }
@@ -102,21 +106,17 @@ export class LoginComponent implements OnInit {
   login(value) {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
-    this.shared.login(value).subscribe(data => {
-      if (data) {
-        this.shared.currentUser = data[0];
+    this.shared.login(value).subscribe(userNToken => {
+      console.log(userNToken);
+      if (userNToken) {
+        const user: User = userNToken['user'];
+        user.token = userNToken['token'];
+        this.shared.localStorage.setItem('currentUser', JSON.stringify(user));
+        this.shared.currentUserSubject.next(user);
         this.shared.loggedIn = true;
-        if (data[0].admin) {
+        if (user.admin) {
           this.shared.isAdmin = true;
-          this.shared.getNotification().subscribe(notifs => {
-            notifs.forEach(notif => {
-              if (notif.status === 'Unread') {
-                this.shared.unreadNotifs = this.shared.unreadNotifs + 1;
-              }
-            });
-            this.shared.notifications = notifs.reverse();
-            this.router.navigateByUrl('/users');
-          });
+          this.getNotifications();
         } else {
         this.router.navigateByUrl('/products');
         }
@@ -126,6 +126,17 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+}
+  getNotifications() {
+    this.shared.getNotification().subscribe(notifs => {
+      notifs.forEach(notif => {
+        if (notif.status === 'Unread') {
+          this.shared.unreadNotifs = this.shared.unreadNotifs + 1;
+        }
+      });
+      this.shared.notifications = notifs.reverse();
+      this.router.navigateByUrl('/users');
+    });
   }
 
 }

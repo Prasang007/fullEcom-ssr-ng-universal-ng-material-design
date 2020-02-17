@@ -12,7 +12,3 @@ img{
 .order-details {
   display: flex;
 }
-
-.mat-step-header {
-  pointer-events: none !important;
-}

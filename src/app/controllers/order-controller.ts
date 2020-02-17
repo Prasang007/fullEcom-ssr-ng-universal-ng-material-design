@@ -27,7 +27,7 @@ class OrderController {
         return console.error(err);
       }
       SharedController.notification(data);
-      SharedController.mail(data);
+      SharedController.mailOrderPlace(data);
       res.json('Order Placed Succesfully !!');
     });
   }

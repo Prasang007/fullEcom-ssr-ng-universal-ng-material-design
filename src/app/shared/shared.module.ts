@@ -27,6 +27,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSortModule} from '@angular/material/sort';
+import {MatTooltipModule} from '@angular/material/tooltip';
 @NgModule({
   declarations: [CardComponent, ExpansionListComponent, OrderComponent],
   imports: [
@@ -54,7 +55,8 @@ import {MatSortModule} from '@angular/material/sort';
     MatSelectModule,
     MatChipsModule,
     MatProgressSpinnerModule,
-    MatSortModule
+    MatSortModule,
+    MatTooltipModule
   ],
   exports: [
     CardComponent,
@@ -81,7 +83,8 @@ import {MatSortModule} from '@angular/material/sort';
     MatTableModule,
     MatChipsModule,
     MatProgressSpinnerModule,
-    MatSortModule
+    MatSortModule,
+    MatTooltipModule
   ],
   providers: [ ]
 })

@@ -28,3 +28,6 @@ mat-chip {
   padding: 6px;
   border-radius: 14px;
 }
+.mat-horizontal-stepper-header{
+  pointer-events: none !important;
+}

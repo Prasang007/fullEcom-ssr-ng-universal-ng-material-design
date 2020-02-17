@@ -26,6 +26,8 @@ import { UserDetailsComponent } from './components/admin/user-details/user-detai
 import { LoaderInterceptor } from './shared/loader.intercepter';
 import { ManageAccountComponent } from './components/manage-account/manage-account.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgtUniversalModule } from '@ng-toolkit/universal';
+import { VerfiyEmailComponent } from './components/verfiy-email/verfiy-email.component';
 
 const config = new AuthServiceConfig([
   {
@@ -59,6 +61,7 @@ export function provideConfig() {
     OrderDetailsComponent,
     UserDetailsComponent,
     ManageAccountComponent,
+    VerfiyEmailComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -69,6 +72,7 @@ export function provideConfig() {
     SocialLoginModule,
     ReactiveFormsModule,
     InfiniteScrollModule,
+    NgtUniversalModule,
     SharedModule
   ],
   exports: [

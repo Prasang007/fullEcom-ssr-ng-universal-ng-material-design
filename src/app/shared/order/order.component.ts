@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class OrderComponent implements OnInit {
   dataSource;
-  columns = ['ProductName', 'Unit Price', 'Quantity' , 'Shipping Address', 'Status', 'Total'];
+  columns = ['ProductName', 'Unit Price', 'Quantity' , 'Shipping Address', 'Date', 'Status', 'Total'];
   constructor(private shared: SharedService, private router: Router) { }
   loading = false;
   ngOnInit() {
@@ -21,7 +21,7 @@ export class OrderComponent implements OnInit {
     this.shared.setTitle('Orders');
   }
   getOrders() {
-  this.shared.getMyOrders(this.shared.currentUser._id).subscribe( orders => {
+  this.shared.getMyOrders(this.shared.currentUserValue._id).subscribe( orders => {
     this.dataSource = new MatTableDataSource(orders.reverse());
     });
   }
@@ -30,5 +30,11 @@ export class OrderComponent implements OnInit {
   }
   eachRow(row) {
     this.router.navigateByUrl('/orders/' + row._id, {state: {data: row}});
+  }
+  gettooltip(row) {
+    if (row.scheduled) {
+      return 'Scheduled Order';
+    }
+    return null;
   }
 }

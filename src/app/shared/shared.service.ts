@@ -1,19 +1,16 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, Optional } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Product } from '../product';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { User } from '../users';
 import { Order } from '../orders';
+import { LOCAL_STORAGE } from '@ng-toolkit/universal';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Access-Control-Allow-Origin':  'http://localhost:4200/',
-    'Access-Control-Allow-Credentials': 'true',
-    Authorization: 'jwt-token'
-  })
+    'Content-Type':  'application/json'  })
 };
 @Injectable()
 export class SharedService {
@@ -24,10 +21,25 @@ export class SharedService {
   notifications: {_id, order: Order, status}[] = [];
   unreadNotifs = 0;
   page: string;
-  currentUser = new User();
+  public currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
+
   apiUrl = 'https://localhost:4000/api/';
   constructor( private http: HttpClient,
-               private title: Title, private snackbar: MatSnackBar  ) { }
+               private title: Title, private snackbar: MatSnackBar,
+               @Inject(LOCAL_STORAGE) public localStorage: any  ) {
+                if (this.localStorage.getItem('currentUser')) {
+                  this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(this.localStorage.getItem('currentUser')));
+                  this.currentUser = this.currentUserSubject.asObservable();
+                  this.loggedIn = true;
+                  if (this.currentUserValue.admin) {
+                    this.isAdmin = true;
+                  }
+                } else {
+                  this.currentUserSubject = new BehaviorSubject<User>(null);
+                  this.currentUser = this.currentUserSubject.asObservable();
+                }
+                }
   // ---------------------------------------PRODUCTS----------------------------------------------
   getProducts(category: string, length): Observable<Product[]> {
     const params = new HttpParams()
@@ -60,7 +72,13 @@ export class SharedService {
   signUp(signupCred): Observable<string> {
     return this.http.post<string>(this.apiUrl + 'shared/signup', signupCred, httpOptions );
   }
+  verifyEmail(token) {
+    return this.http.post(this.apiUrl + 'shared/verifyEmail', token, httpOptions);
+  }
   // ---------------------------------------SHARED RESOURCES----------------------------------------------
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
+}
   setTitle(newTitle: string) {
     this.page = newTitle;
     this.title.setTitle(newTitle);
@@ -106,6 +124,11 @@ export class SharedService {
     const params = new HttpParams()
     .set(key, value);
     return this.http.get<User>(this.apiUrl + 'users/getUserBy', {params});
+  }
+  verificationEmailcheck(key, value): Observable<User> {
+    const params = new HttpParams()
+    .set(key, value);
+    return this.http.get<User>(this.apiUrl + 'users/verificationEmailcheck', {params});
   }
   updateTotalOrder(id: string, length: number, task: string) {
     return this.http.put<string>(this.apiUrl + 'users/updateTotalOrder', {_id: id, totalOrders: length, task}, httpOptions);

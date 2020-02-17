@@ -16,7 +16,7 @@ export class UserDetailsComponent implements OnInit {
   orders: Order[];
   showOrders = false;
   loading = false;
-  columns = ['Name', 'ProductName', 'Unit Price', 'Quantity' , 'Shipping Address', 'UserId' , 'Status', 'Total'];
+  columns = ['Name', 'ProductName', 'Unit Price', 'Quantity' , 'Shipping Address', 'Date', 'UserId' , 'Status', 'Total'];
   constructor(private location: Location, private router: Router, private shared: SharedService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -28,12 +28,13 @@ export class UserDetailsComponent implements OnInit {
     this.user = history.state.data;
     this.getOrders();
     } else {
-      const id = this.route.snapshot.params.id;
-      this.shared.getUserBy('_id', id).subscribe( user => {
+      this.route.params.subscribe(params => {
+      this.shared.getUserBy('_id', params['id']).subscribe( user => {
         this.user = user[0];
         this.getOrders();
       });
-    }
+    });
+  }
   }
   getOrders() {
     this.shared.getMyOrders(this.user._id).subscribe( orders => {
@@ -42,9 +43,15 @@ export class UserDetailsComponent implements OnInit {
     });
   }
   eachRow(row) {
-    this.router.navigateByUrl('/order-status', {state: {data: row}});
+    this.router.navigateByUrl('/order-status/' + row._id, {state: {data: row}});
   }
   goBack() {
     this.location.back();
+  }
+  gettooltip(row) {
+    if (row.scheduled) {
+      return 'Scheduled Order';
+    }
+    return null;
   }
 }

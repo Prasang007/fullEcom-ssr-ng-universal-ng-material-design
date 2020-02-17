@@ -10,11 +10,15 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ManageOrdersComponent implements OnInit {
   dataSource;
-  columns = ['Name', 'ProductName', 'Unit Price', 'Quantity' , 'Shipping Address', 'Username' , 'Status', 'Total'];
+  columns = ['Name', 'ProductName', 'Unit Price', 'Quantity' , 'Shipping Address', 'Date', 'Username' , 'Status', 'Total'];
+  loading = false;
   constructor(private shared: SharedService, private router: Router) { }
 
   ngOnInit() {
     this.shared.setTitle(' Manage Orders');
+    this.shared.isLoading.subscribe((v) => {
+    this.loading = v;
+    });
     this.getOrders();
   }
   getOrders() {
@@ -26,6 +30,12 @@ export class ManageOrdersComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   eachRow(row) {
-    this.router.navigateByUrl('/order-status', {state: {data: row}});
+    this.router.navigateByUrl('/order-status/' + row._id, {state: {data: row}});
+  }
+  gettooltip(row) {
+    if (row.scheduled) {
+      return 'Scheduled Order';
+    }
+    return null;
   }
 }

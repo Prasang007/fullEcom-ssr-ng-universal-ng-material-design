@@ -3,6 +3,7 @@ import notification from '../models/notifications';
 import { Request, Response, NextFunction } from 'express';
 import md5 from 'md5';
 import nodemailer from 'nodemailer';
+import * as jwt from 'jsonwebtoken';
 
 class SharedController {
   static login = (req: Request, res: Response, next: NextFunction) => {
@@ -12,7 +13,13 @@ class SharedController {
       } else {
         if (data.length) {
           if (data[0].password === md5(req.body.password)) {
-            res.json(data);
+            const token = jwt.sign(
+              { userId: data[0]._id, username: data[0].name, email: data[0].email  },
+              'jnsfkjgsdfgnsdjfgosdjfgiosdjfgojsdfiojdoifgosdfgosdjfosjdfgijsdfgjodj',
+              { expiresIn: '1h' }
+            );
+            // Send the jwt in the response
+            res.json({user: data[0], token});
           } else {
             res.json(0);
           }
@@ -44,12 +51,18 @@ class SharedController {
       res.json(data);
     });
   }
+  static verifyEmail = (req: Request, res: Response, next: NextFunction) => {
+    console.log('prapssap')
+    jwt.verify(req.body.id, 'jnsfkjgsdfgnsdjfgosdjfgiosdjfgojsdfiojdoifgosdfgosdjfosjdfgijsdfgjodj', (err,payload) => {
+    res.json(payload);
+    });
+  }
   static signup = (req: Request, res: Response, next: NextFunction) => {
     req.body.password = md5(req.body.password);
     const newUser = new user(req.body);
     newUser.save((err, data) => {
       if (err) {return console.error(err); }
-
+      SharedController.emailVerifyMail(data);
       res.json('Sign Up Succesfull');
 
     });
@@ -85,7 +98,35 @@ class SharedController {
       res.json(true);
   });
 }
-  static mail = (data) =>  {
+
+  static emailVerifyMail = (data) => {
+    const token = jwt.sign(
+      { userId: data._id, username: data.name, email: data.email  },
+      'jnsfkjgsdfgnsdjfgosdjfgiosdjfgojsdfiojdoifgosdfgosdjfosjdfgijsdfgjodj');
+    console.log(token);
+  //   const transport = nodemailer.createTransport({
+  //     host: 'smtp.mailtrap.io',
+  //     port: 2525,
+  //     auth: {
+  //       user: '55301ca6e03641',
+  //       pass: '92eb8ac6ad34e8'
+  //     }
+  //   });
+  //   const mailOptions = {
+  //     from: 'admin@gmail.com',
+  //     to: data.email,
+  //     subject: 'Verify your Email ID',
+  //     // tslint:disable-next-line: max-line-length
+  //     text: 'Verify your Email ID by clicking this link https://localhost:4000/verifyEmail/' + token
+  // };
+  //   transport.sendMail(mailOptions, (error, info) => {
+  //   if (error) {
+  //       return console.log(error);
+  //   }
+  //   console.log('Message sent: %s', info.messageId);
+  //   });
+  }
+  static mailOrderPlace = (data) =>  {
     const transport = nodemailer.createTransport({
       host: 'smtp.mailtrap.io',
       port: 2525,
@@ -99,7 +140,7 @@ class SharedController {
       to: 'prasangg.ongraph@gmail.com',
       subject: 'Order Placed by ' + data.placedBy,
       // tslint:disable-next-line: max-line-length
-      text: 'An Order was placed by ' + data.placedBy + 'at' + data.placed + 'which contains' + data.quantity + ' ' + data.productName + 'with a total amount of' + data.total
+      text: 'An Order was placed by ' + data.placedBy + ' at ' + data.placed + ' which contains ' + data.quantity + ' ' + data.productName + ' with a total amount of ' + data.total
   };
     transport.sendMail(mailOptions, (error, info) => {
     if (error) {

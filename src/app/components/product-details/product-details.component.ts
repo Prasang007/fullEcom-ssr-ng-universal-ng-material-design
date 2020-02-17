@@ -27,9 +27,10 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
   fetchProduct() {
-    const id = this.route.snapshot.params.id;
-    this.shared.getProductById(id).subscribe(product => {
+    this.route.params.subscribe(params => {
+    this.shared.getProductById(params['id']).subscribe(product => {
       this.product = product;
+    });
     });
   }
   addToCart(quantity, scheduleDate: Date) {
@@ -44,7 +45,7 @@ export class ProductDetailsComponent implements OnInit {
     newItem.productImage = this.product.image;
     newItem.category = this.product.category;
     newItem.price = quantity * this.product.price;
-    this.shared.currentUser.cart.unshift(newItem);
+    this.shared.currentUserValue.cart.unshift(newItem);
   }
   buyNow(quantity, scheduleDate: Date) {
     if (!this.addToCart) {

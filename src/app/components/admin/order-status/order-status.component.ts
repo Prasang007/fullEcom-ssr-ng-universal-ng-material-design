@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit} from '@angular/core';
 import { Order } from 'src/app/orders';
 import { SharedService } from 'src/app/shared/shared.service';
@@ -10,14 +11,16 @@ import { Location } from '@angular/common';
 export class OrderStatusComponent implements OnInit {
   progress = 0;
   step = 0;
-  constructor(private shared: SharedService, private location: Location) { }
+  constructor(private shared: SharedService, private location: Location, private route: ActivatedRoute) { }
   order: Order;
   ngOnInit() {
-    if (history.state.id) {
-      this.getOrder(history.state.id);
-    } else {
+    if (history.state.data) {
       this.order = history.state.data;
       this.progressAssign();
+    } else {
+      this.route.params.subscribe(params => {
+        this.getOrder(params['id']);
+        });
     }
   }
   cancelOrder() {

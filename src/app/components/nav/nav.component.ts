@@ -17,9 +17,23 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
       this.initNotification();
+      if (this.shared.isAdmin) {
+        this.getNotification();
+      }
   }
   initNotification() {
     this.shared.unreadNotifs = 0;
+  }
+  getNotification() {
+    this.shared.getNotification().subscribe(notifs => {
+      console.log(notifs);
+      notifs.forEach(notif => {
+        if (notif.status === 'Unread') {
+          this.shared.unreadNotifs = this.shared.unreadNotifs + 1;
+        }
+      });
+      this.shared.notifications = notifs.reverse();
+    });
   }
   seen() {
     this.shared.saveNotification().subscribe(data => {
@@ -33,23 +47,25 @@ export class NavComponent implements OnInit {
     this.shared.isAdmin = !this.shared.isAdmin;
   }
   navigate(id: string) {
-    this.router.navigateByUrl('/order-status', {state: {id}});
+    this.router.navigate(['/order-status/' , id]);
   }
   signout() {
     if (this.shared.isSocial) {
       this.authService.signOut();
     }
     if ( !this.shared.isAdmin) {
-    this.shared.updateCart({cart: this.shared.currentUser.cart, _id: this.shared.currentUser._id}).subscribe(success => {
+    this.shared.updateCart({cart: this.shared.currentUserValue.cart, _id: this.shared.currentUserValue._id}).subscribe(success => {
       this.shared.openSnackbar(success, 'Close' );
-      this.shared.currentUser = new User();
+      this.shared.localStorage.removeItem('currentUser');
+      this.shared.currentUserSubject.next(null);
       this.shared.loggedIn = false;
       this.router.navigateByUrl('/login');
     });
     } else {
       this.shared.isAdmin = false;
       this.shared.loggedIn = false;
-      this.shared.currentUser = new User();
+      this.shared.localStorage.removeItem('currentUser');
+      this.shared.currentUserSubject.next(null);
       this.router.navigateByUrl('/login');
     }
   }

@@ -16,7 +16,7 @@
     <div style="width: 70%" >
       <h3 style="flex:auto">{{order?.productName}}</h3>
       <hr>
-    <h5 *ngIf="order?.scheduled"  >Scheduled on : {{order?.scheduled}}</h5>
+    <h5 *ngIf="order?.scheduled"  >Scheduled on : {{order?.scheduled | date :'medium'}}</h5>
       <p>Quantity: {{order?.quantity}}</p>
       <p>Price: {{order?.price}}</p>
       <p>Total: {{order?.total}}</p>

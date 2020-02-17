@@ -15,10 +15,12 @@ import { SignupComponent } from './components/signup/signup.component';
 import { AdminGuard } from './shared/admin.guard';
 import { CartComponent } from './components/cart/cart.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { VerfiyEmailComponent } from './components/verfiy-email/verfiy-email.component';
 
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'verifyEmail/:id', component: VerfiyEmailComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'products', component: ProductsComponent, canActivate: [LoginInGuard] },
   {path: 'orders', component: OrderComponent, canActivate: [LoginInGuard]},
@@ -29,7 +31,7 @@ const routes: Routes = [
   {path: 'users', component: UsersInfoComponent, canActivate: [ AdminGuard]},
   {path: 'users/:id', component:  UserDetailsComponent, canActivate: [ AdminGuard]},
   {path: 'manage/orders', component: ManageOrdersComponent, canActivate: [ AdminGuard] },
-  {path: 'order-status', component: OrderStatusComponent, canActivate: [ AdminGuard] },
+  {path: 'order-status/:id', component: OrderStatusComponent, canActivate: [ AdminGuard] },
   {path: 'add-product', component: AddProductComponent , canActivate: [ AdminGuard] },
   {path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
