@@ -132,7 +132,7 @@ static emailForgotPsd = (req: Request, res: Response, next: NextFunction) => {
     to: req.body.email,
     subject: 'Forgot Password',
 // tslint:disable-next-line: max-line-length
-    html: '<p>Click <a href="https://localhost:4000/forgotPsd' + token + '">here</a> to reset your password. Valid only for 2 minutes</p>'
+    html: '<p>Click <a href="https://localhost:4000/forgotPassword/' + token + '">here</a> to reset your password. Valid only for 2 minutes</p>'
     };
   transport.sendMail(mailOptions, (error, info) => {
   if (error) {

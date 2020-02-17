@@ -33,3 +33,4 @@
         <!-- <button mat-button (click)="toggleAdmin()">admin: {{shared.isAdmin}}</button> -->
 </mat-toolbar>
 <h1 *ngIf="!shared.loggedIn"  >Welcome to the E-Commerce App</h1>
+<div style="background-color: rgb(168, 157, 55); color:white; width: 100%;" *ngIf="shared.loggedIn && !shared.currentUserValue?.status" > <h1 style="margin:0">Verify Your Account</h1></div>

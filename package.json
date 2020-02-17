@@ -14,7 +14,7 @@
     "go": "npm run build:ssr",
     "goServer": "ng build --prod && npm run build:server-bundlesfast ",
     "build:server-bundles": "ng run assignmentModuleOne:server:production --bundleDependencies all",
-    "build:server-bundlesfast": "nodemon --watch src/app/controllers --watch src/app/routes -e ts,html,css --exec 'npm run compile:server && ng run assignmentModuleOne:server:production --bundleDependencies all && npm run serve:ssr'",
+    "build:server-bundlesfast": "nodemon --watch src/app/controllers --watch src/app/routes -e ts,html,css --exec 'npm run compile:server && ng run assignmentModuleOne:server:production --bundleDependencies all'",
     "build:client-bundlesfast": "nodemon --watch src/ -e ts,html,css --exec 'ng build --prod && npm run serve:ssr'"
   },
   "private": true,

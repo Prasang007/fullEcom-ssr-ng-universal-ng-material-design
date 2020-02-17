@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +14,7 @@ export class SignupComponent implements OnInit {
   signUpForm: FormGroup;
   showPassord;
   constructor(private shared: SharedService,
-              private router: Router,
+              private router: Router, private snackbar: MatSnackBar
               ) { }
 
   ngOnInit() {
@@ -41,6 +42,7 @@ export class SignupComponent implements OnInit {
         } else {
           this.shared.signUp(value).subscribe(success => {
             this.shared.openSnackbar(success, 'Close');
+            this.snackbar.open('Email Verification Link has been sent to your email', 'Close');
             this.router.navigateByUrl('/login');
           });
         }

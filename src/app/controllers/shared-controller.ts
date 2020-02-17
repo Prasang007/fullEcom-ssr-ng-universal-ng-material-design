@@ -118,7 +118,7 @@ class SharedController {
       to: data.email,
       subject: 'Verify your Email ID',
       // tslint:disable-next-line: max-line-length
-      html: '<p>Click <a href="https://localhost:4000/verifyEmail' + token + '">here</a> to reset your password. Valid only for 2 minutes</p>'
+      html: '<p>Click <a href="https://localhost:4000/verifyEmail/' + token + '">here</a> to Verify your Email ID</p>'
   };
     transport.sendMail(mailOptions, (error, info) => {
     if (error) {

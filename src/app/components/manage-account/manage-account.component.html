@@ -17,7 +17,6 @@
       <div class="button">
         <button type="submit" mat-button [disabled]="(updateForm.controls['name'].value ===currentUser.name || !updateForm.controls['name'].valid )" >Update</button>
       </div>
-      {{!updateForm.controls['name'].errors?.required}}{{!updateForm.controls['name'].valid}} {{!updateForm.controls['name'].dirty}} {{updateForm.controls['name'].value}}
     </form>
     <button style="margin-top: 20px;" mat-button (click)="changePassword = !changePassword" >Change Password</button>
   </div>

@@ -21,7 +21,10 @@ Use `npm run` go which starts at http://localhost:4000/
 7. Filter Products
 8. View product details.
 9. Place orders for different people and at different addresses.
-
+10. Forgot Password FUnctionalities over email.
+11. Verfication of Email ID 
+12. Consistent Login
+13. Secure using Https
 ## An Admin Can: 
 
 1. Check total orders of All Users
@@ -30,3 +33,4 @@ Use `npm run` go which starts at http://localhost:4000/
 4. Cancel Orders.
 5. View detals of all the Users.
 6. When a user places an order an email is sent to the admin, and has a notification of all the recently placed orders.
+
