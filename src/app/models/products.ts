@@ -14,7 +14,6 @@ class ProductModel {
   }
 );
  static collectionName = 'Products';
- // tslint:disable-next-line: align
 
  static baseModel = new DBModel(ProductModel.collectionName, ProductModel.productSchema);
 
@@ -28,6 +27,11 @@ class ProductModel {
     const conditions = {category: conds};
     ProductModel.baseModel.findSkipAndLimit(conditions, skips, limit, (err, productsArray) => {
       callback(err, productsArray);
+    });
+  }
+  public static createProduct(body, callback) {
+    ProductModel.baseModel.create(body, (err, doc) => {
+      callback(err, doc);
     });
   }
 }

@@ -6,7 +6,7 @@ class DBModel {
       this.collectionObj = connectionInstance.model(collectionName, DbSchema);
     }
 
-    public findById(objId, params, callback) {
+    public findById = (objId, params, callback) => {
       const query = this.collectionObj.findById(objId);
       if (params !== '') {
         query.select(params);
@@ -15,9 +15,9 @@ class DBModel {
         callback(err, docs);
       });
     }
-    public findSkipAndLimit(conditions, skips, limit, callback) {
+    public findSkipAndLimit = (conditions, skips, limit, callback) => {
       console.log(conditions);
-      if (parseInt(skips, 10) && parseInt(limit, 10) && conditions !== '') {
+      if (typeof parseInt(skips, 10) === 'number' && parseInt(limit, 10) && conditions !== '') {
         const query = this.collectionObj.find(conditions, (err, docs) => {
           callback(err, docs);
         })
@@ -28,17 +28,25 @@ class DBModel {
       }
     }
 
-    public create = function(data, cb) {
-      var conn = this.collectionObj;
-      insertRec
+    public create = (data, callback) => {
+      const conn = this.collectionObj;
+      this.insertRec(conn, data, (err, doc) => {
+        callback(err, doc);
+      });
     }
 
-    public insertRec = (conn, data, cb) => {
+    private insertRec = (conn, data, callback) => {
       const newRecord =  conn(data);
-      newRecord.save((err, obj) => {
-          cb(err, obj);
+      newRecord.save((err, doc) => {
+          callback(err, doc);
       });
-  }
+    }
+
+    public findOne = (conditions, params, callback) => {
+      const query = this.collectionObj.findOne(conditions, params).exec((err, docs) => {
+        callback(err, docs);
+      });
+    }
 }
 export default DBModel;
 

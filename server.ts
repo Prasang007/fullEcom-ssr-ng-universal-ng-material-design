@@ -18,7 +18,6 @@ import routes from './src/app/routes/routes';
 import {connectionInstance} from './src/app/lib/mongo-connection';
 import 'dotenv/config';
 import 'zone.js/dist/zone-node';
-import * as mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as https from 'https';

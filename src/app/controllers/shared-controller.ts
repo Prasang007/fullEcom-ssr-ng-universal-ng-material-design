@@ -1,52 +1,39 @@
-import user from '../models/users';
+import userModel from '../models/users';
 import notification from '../models/notifications';
 import { Request, Response, NextFunction } from 'express';
-import md5 from 'md5';
 import nodemailer from 'nodemailer';
 import * as jwt from 'jsonwebtoken';
 
 class SharedController {
   static login = (req: Request, res: Response, next: NextFunction) => {
-    user.find({email: req.body.email}, (error, data) => {
-      if (error) {
-          return next(error);
+    console.log(req.body);
+    userModel.login(req.body, {}, (err, userNToken) => {
+      if (err) {
+        res.status(404).json(0);
       } else {
-        // if (data.length) {
-        //   if (data[0].password === md5(req.body.password)) {
-        //     const token = jwt.sign(
-        //       { userId: data[0]._id, username: data[0].name, email: data[0].email  },
-        //       'jnsfkjgsdfgnsdjfgosdjfgiosdjfgojsdfiojdoifgosdfgosdjfosjdfgijsdfgjodj',
-        //       { expiresIn: '1h' }
-        //     );
-        //     // Send the jwt in the response
-        //     res.json({user: data[0], token});
-        //   } else {
-        //     res.json(0);
-        //   }
-        // } else {
-        //   res.json(0);
-        //   res.status(404);
-        // }
+        console.log(userNToken);
+        res.json(userNToken);
       }
+
     });
   }
   static checkEmail = (req: Request, res: Response, next: NextFunction) => {
-    user.find({email: req.query.email}, (error, data) => {
-      if (error) {
-        return next(error);
+    userModel.checkEmail(req.query.email, {}, (err, bool) => {
+      if (err) {
+        return next(err);
       } else {
-        if (data.length) {
+        if (bool) {
+          console.log({Message: 'Email Exist'});
           res.json(1);
         } else {
+          console.log({Message: 'Email does not Exist'});
           res.json(0);
         }
       }
     });
   }
   static signupWithEmail = (req: Request, res: Response, next: NextFunction) => {
-    req.body.password = md5(req.body.password);
-    const newUser = new user(req.body);
-    newUser.save((err, data) => {
+    userModel.signupWithEmail(req.body, (err, data) => {
       if (err) {return console.error(err); }
       res.json(data);
     });
@@ -59,14 +46,14 @@ class SharedController {
     });
   }
   static signup = (req: Request, res: Response, next: NextFunction) => {
-    req.body.password = md5(req.body.password);
-    const newUser = new user(req.body);
-    newUser.save((err, data) => {
-      if (err) {return console.error(err); }
-      SharedController.emailVerifyMail(data);
-      res.json('Sign Up Succesfull');
+    // req.body.password = md5(req.body.password);
+    // const newUser = new user(req.body);
+    // newUser.save((err, data) => {
+    //   if (err) {return console.error(err); }
+    //   SharedController.emailVerifyMail(data);
+    //   res.json('Sign Up Succesfull');
 
-    });
+    // });
   }
   static notification = (data) => {
     const newNotification = new notification({order: data, status: 'Unread'});
