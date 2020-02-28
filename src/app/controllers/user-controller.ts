@@ -23,12 +23,13 @@ static verficationEmailCheck =  (req: Request, res: Response, next: NextFunction
   console.log('sdasd')
   user.find(req.query, (err, data) => {
     console.log(data);
-    const bool = data[0].status;
+    // const bool = data[0].status;
+    const bool = true;
     console.log(bool);
     if (bool) {
       res.json(0);
     } else {
-    data[0].status = true;
+    // data[0].status = true;
     data[0].save((er, dta) => {
       if (er) {
         res.status(404);
@@ -43,7 +44,7 @@ static verficationEmailCheck =  (req: Request, res: Response, next: NextFunction
 }
 static updateName =  (req: Request, res: Response, next: NextFunction) => {
     user.findById(req.body._id, (err, data) => {
-      data.name = req.body.name;
+      // data.name = req.body.name;
       data.save((er, dta) => {
         if (er) {
           res.status(404);
@@ -56,7 +57,7 @@ static updateName =  (req: Request, res: Response, next: NextFunction) => {
   }
 static updateCart =  (req: Request, res: Response, next: NextFunction) => {
     user.findById(req.body._id, (err, data) => {
-      data.cart = req.body.cart;
+      // data.cart = req.body.cart;
       data.save((er, dta) => {
         if (er) {
           res.status(404);
@@ -84,7 +85,7 @@ static checkPassword = (req: Request, res: Response, next: NextFunction) => {
 static changePassword =  (req: Request, res: Response, next: NextFunction) => {
     user.find({email: req.body.email}, (err, data) => {
       req.body.password = md5(req.body.password);
-      data[0].password = req.body.password;
+      // data[0].password = req.body.password;
       data[0].save((er, dta) => {
         if (er) {
           res.status(404);
@@ -98,9 +99,9 @@ static changePassword =  (req: Request, res: Response, next: NextFunction) => {
 static updateTotalOrder =  (req: Request, res: Response, next: NextFunction) => {
     user.findById(req.body._id, (err, data) => {
       if (req.body.task === 'add') {
-       data.totalOrders = +data.totalOrders + +req.body.totalOrders;
+      //  data.totalOrders = +data.totalOrders + +req.body.totalOrders;
       } else {
-        data.totalOrders = data.totalOrders - req.body.totalOrders;
+        // data.totalOrders = data.totalOrders - req.body.totalOrders;
       }
       data.save((er, dta) => {
         if (er) {

@@ -7,7 +7,7 @@ import SharedController from './shared-controller';
 class OrderController {
   static changeStatus = (req: Request, res: Response, next: NextFunction) => {
     order.findById(req.body._id, (err, data) => {
-      data.status = req.body.status;
+      // data.status = req.body.status;
       data.save((er, dta) => {
         if (er) {
           return console.error(er);

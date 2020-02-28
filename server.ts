@@ -15,7 +15,7 @@ import routes from './src/app/routes/routes';
  * from your application's main.server.ts file, as seen below with the
  * import for `ngExpressEngine`.
  */
-
+import {connectionInstance} from './src/app/lib/mongo-connection';
 import 'dotenv/config';
 import 'zone.js/dist/zone-node';
 import * as mongoose from 'mongoose';
@@ -38,24 +38,21 @@ const app = express();
 // Express server
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist/browser');
-const {
-  MONGO_USER,
-  MONGO_PASSWORD,
-  MONGO_PATH,
-} = process.env;
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const {AppServerModuleNgFactory, LAZY_MODULE_MAP, ngExpressEngine, provideModuleMap} = require('./dist/server/main');
 
-
-mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_PATH}`, {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true
-})
-  .then(() => console.log('Database connected successfully!'))
+connectionInstance.then(() => console.log('Database connected successfully!'))
   .catch((err) => console.error(err));
 
+
+  // mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_PATH}`, {
+  //   useNewUrlParser: true,
+  //   useFindAndModify: false,
+  //   useUnifiedTopology: true
+  // })
+  //   .then(() => console.log('Database connected successfully!'))
+  //   .catch((err) => console.error(err));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -1,7 +1,9 @@
 import * as mongoose from 'mongoose';
 import { ObjectId } from 'bson';
+import DBModel from './db_model';
 
-const ProductSchema: mongoose.Schema = new mongoose.Schema(
+class ProductModel {
+  static productSchema: mongoose.Schema = new mongoose.Schema(
   {
     id: {type: ObjectId},
     name: {type: String},
@@ -11,5 +13,22 @@ const ProductSchema: mongoose.Schema = new mongoose.Schema(
     description: {type: String},
   }
 );
+ static collectionName = 'Products';
+ // tslint:disable-next-line: align
 
-export default mongoose.model('Product', ProductSchema);
+ static baseModel = new DBModel(ProductModel.collectionName, ProductModel.productSchema);
+
+  public static getProductById(id, params, callback) {
+    ProductModel.baseModel.findById(id, false , (err, product) => {
+      callback(err, product);
+    });
+  }
+
+  public static getAllProducts(conds, skips, limit, callback) {
+    const conditions = {category: conds};
+    ProductModel.baseModel.findSkipAndLimit(conditions, skips, limit, (err, productsArray) => {
+      callback(err, productsArray);
+    });
+  }
+}
+export default ProductModel;

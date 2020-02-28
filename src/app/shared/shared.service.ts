@@ -44,7 +44,8 @@ export class SharedService {
   getProducts(category: string, length): Observable<Product[]> {
     const params = new HttpParams()
     .set('category', category)
-    .set('skip', length);
+    .set('skip', length)
+    .set('limit', '6');
     return this.http.get<Product[]>(this.apiUrl + 'products', {params});
   }
   getProductById(id: string): Observable<Product> {

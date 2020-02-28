@@ -17,6 +17,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { VerfiyEmailComponent } from './components/verfiy-email/verfiy-email.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ErrorNotfoundComponent } from './components/error-notfound/error-notfound.component';
 
 
 const routes: Routes = [
@@ -36,7 +37,8 @@ const routes: Routes = [
   {path: 'manage/orders', component: ManageOrdersComponent, canActivate: [ AdminGuard] },
   {path: 'order-status/:id', component: OrderStatusComponent, canActivate: [ AdminGuard] },
   {path: 'add-product', component: AddProductComponent , canActivate: [ AdminGuard] },
-  {path: '', redirectTo: '/login', pathMatch: 'full'}
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
+  {path: '**' , component: ErrorNotfoundComponent}
 ];
 
 @NgModule({

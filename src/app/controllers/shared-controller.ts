@@ -11,22 +11,22 @@ class SharedController {
       if (error) {
           return next(error);
       } else {
-        if (data.length) {
-          if (data[0].password === md5(req.body.password)) {
-            const token = jwt.sign(
-              { userId: data[0]._id, username: data[0].name, email: data[0].email  },
-              'jnsfkjgsdfgnsdjfgosdjfgiosdjfgojsdfiojdoifgosdfgosdjfosjdfgijsdfgjodj',
-              { expiresIn: '1h' }
-            );
-            // Send the jwt in the response
-            res.json({user: data[0], token});
-          } else {
-            res.json(0);
-          }
-        } else {
-          res.json(0);
-          res.status(404);
-        }
+        // if (data.length) {
+        //   if (data[0].password === md5(req.body.password)) {
+        //     const token = jwt.sign(
+        //       { userId: data[0]._id, username: data[0].name, email: data[0].email  },
+        //       'jnsfkjgsdfgnsdjfgosdjfgiosdjfgojsdfiojdoifgosdfgosdjfosjdfgijsdfgjodj',
+        //       { expiresIn: '1h' }
+        //     );
+        //     // Send the jwt in the response
+        //     res.json({user: data[0], token});
+        //   } else {
+        //     res.json(0);
+        //   }
+        // } else {
+        //   res.json(0);
+        //   res.status(404);
+        // }
       }
     });
   }
@@ -91,7 +91,7 @@ class SharedController {
        } else {
         notifs.forEach(notif => {
           notification.findById(notif._id, (err, newNotif) => {
-            newNotif.status = 'Read';
+            // newNotif.status = 'Read';
             newNotif.save();
           });
         });
